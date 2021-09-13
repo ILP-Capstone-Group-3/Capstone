@@ -1,0 +1,54 @@
+<div  *ngIf="loginFlag">
+    <h1>Employee Login</h1>
+    <form>
+        <label>Employee ID:</label>
+        <input type="text" name="emp_id"><br>
+        <label>Password:</label>
+        <input type="password" name="password"><br>
+        <input type="submit" value="Sign in">
+    </form>
+    <span *ngIf="loginFailFlag">Incorrect ID/Password, please try again.</span><br/>
+    <div>Developer button: Go to main page</div>
+</div>
+
+<div  *ngIf="mainFlag">
+    <h1>Employee Main Page</h1>
+    <span>Send Request</span> | 
+    <span>Update Order Status</span> |
+    <span>Update Users</span> | 
+    <span>Edit Profile</span> |
+    <span>Logout</span>
+</div>
+
+<div  *ngIf="requestFlag">
+    <h1>Send Request To Admin</h1>
+    <span>Back</span>
+</div>
+
+<div  *ngIf="updateFlag">
+    <h1>Update Order Status</h1>
+    <span>Back</span>
+</div>
+
+<div  *ngIf="unlockFlag">
+    <h1>Unlock Users</h1>
+    <span>Back</span>
+</div>
+
+<div  *ngIf="passwordFlag">
+    <!-- Editting the profile and changing the default password are the same page,
+    just with different headers depending on which it's supposed to be. -->
+    <h1  *ngIf="editFlag">Edit Profile</h1>
+    <h1  *ngIf="changeFlag">Please Change Default Password</h1>
+    <form>
+        <label>New Password: </label>
+        <input type="password" name="new_password"><br>
+        <input type="submit" value="Update">
+    </form>
+    <!-- Only shows up for profile. -->
+    <span *ngIf="editChangedFlag">Password has been changed!</span><br/>
+    <span *ngIf="editFlag">Back</span>
+    <!-- Only shows up for change default. -->
+    <span *ngIf="changeFlag">Back</span>
+</div>
+
