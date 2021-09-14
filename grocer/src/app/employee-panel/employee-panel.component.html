@@ -8,31 +8,31 @@
         <input type="submit" value="Sign in">
     </form>
     <span *ngIf="loginFailFlag">Incorrect ID/Password, please try again.</span><br/>
-    <div>Developer button: Go to main page</div>
+    <div style="color: blue;" (click)="toMain()">Developer "button": Go to main page</div>
 </div>
 
 <div  *ngIf="mainFlag">
     <h1>Employee Main Page</h1>
-    <span>Send Request</span> | 
-    <span>Update Order Status</span> |
-    <span>Update Users</span> | 
-    <span>Edit Profile</span> |
-    <span>Logout</span>
+    <span (click)="toRequest()">Send Request</span> | 
+    <span (click)="toUpdate()">Update Order Status</span> |
+    <span (click)="toUnlock()">Update Users</span> | 
+    <span (click)="toEditProfile()">Edit Profile</span> |
+    <span (click)="logout()">Logout</span>
 </div>
 
 <div  *ngIf="requestFlag">
     <h1>Send Request To Admin</h1>
-    <span>Back</span>
+    <span (click)="toMain()">Back</span>
 </div>
 
 <div  *ngIf="updateFlag">
     <h1>Update Order Status</h1>
-    <span>Back</span>
+    <span (click)="toMain()">Back</span>
 </div>
 
 <div  *ngIf="unlockFlag">
     <h1>Unlock Users</h1>
-    <span>Back</span>
+    <span (click)="toMain()">Back</span>
 </div>
 
 <div  *ngIf="passwordFlag">
@@ -47,8 +47,8 @@
     </form>
     <!-- Only shows up for profile. -->
     <span *ngIf="editChangedFlag">Password has been changed!</span><br/>
-    <span *ngIf="editFlag">Back</span>
+    <span *ngIf="editFlag" (click)="toMain()">Back</span>
     <!-- Only shows up for change default. -->
-    <span *ngIf="changeFlag">Back</span>
+    <span *ngIf="changeFlag" (click)="refuseToChangePassword()">Back</span>
 </div>
 
