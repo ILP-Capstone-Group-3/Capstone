@@ -24,6 +24,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatSelectModule} from '@angular/material/select';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatCardModule} from '@angular/material/card';
 // import { AddProductsComponent } from './admin/add-products/add-products.component';
 // import { AdminPortalComponent } from './admin/admin-portal/admin-portal.component';
 // import { DeleteProductsComponent } from './admin/delete-products/delete-products.component';
@@ -34,7 +38,11 @@ import { AdminPortalComponent } from "./admin/admin-portal/admin-portal.componen
 import { LoginComponent } from "./login/login.component";
 import { AddProductsComponent } from "./admin/add-products/add-products.component";
 import { DeleteProductsComponent } from "./admin/delete-products/delete-products.component";
-import {UpdateProductsComponent} from "./admin/update-products/update-products.component"
+import {UpdateProductsComponent} from "./admin/update-products/update-products.component";
+import { OrderCancelComponent } from './employee-panel/order-cancel/order-cancel.component';
+import { SendRequestComponent } from './employee-panel/send-request/send-request.component';
+import { UnlockUsersComponent } from './employee-panel/unlock-users/unlock-users.component';
+import { EditProfileComponent } from './employee-panel/edit-profile/edit-profile.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +56,11 @@ import {UpdateProductsComponent} from "./admin/update-products/update-products.c
     LoginComponent,
     AddProductsComponent,
     DeleteProductsComponent,
-    UpdateProductsComponent
+    UpdateProductsComponent,
+    OrderCancelComponent,
+    SendRequestComponent,
+    UnlockUsersComponent,
+    EditProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -74,7 +86,11 @@ import {UpdateProductsComponent} from "./admin/update-products/update-products.c
     FlexLayoutModule,
     MatIconModule,
     MatDividerModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatExpansionModule,
+    MatSelectModule,
+    MatDialogModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

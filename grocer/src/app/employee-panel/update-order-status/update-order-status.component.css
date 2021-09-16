@@ -1,0 +1,12 @@
+.orders-panel {
+    padding: 16px;
+    width: 100%;
+}
+
+.status-dropdown {
+    margin-top: 7px;
+}
+
+.order-details {
+    padding: 6px;
+}
