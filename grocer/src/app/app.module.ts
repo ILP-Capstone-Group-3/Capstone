@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
@@ -24,7 +24,17 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatToolbarModule} from '@angular/material/toolbar';
+// import { AddProductsComponent } from './admin/add-products/add-products.component';
+// import { AdminPortalComponent } from './admin/admin-portal/admin-portal.component';
+// import { DeleteProductsComponent } from './admin/delete-products/delete-products.component';
+// import { UpdateProductsComponent } from './admin/update-products/update-products.component';
+// import { LoginComponent } from './login/login.component';
 
+import { AdminPortalComponent } from "./admin/admin-portal/admin-portal.component";
+import { LoginComponent } from "./login/login.component";
+import { AddProductsComponent } from "./admin/add-products/add-products.component";
+import { DeleteProductsComponent } from "./admin/delete-products/delete-products.component";
+import {UpdateProductsComponent} from "./admin/update-products/update-products.component"
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +43,12 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     FirstPageComponent,
     UserLoginComponent,
     EmployeePanelComponent,
-    UpdateOrderStatusComponent
+    UpdateOrderStatusComponent,
+    AdminPortalComponent,
+    LoginComponent,
+    AddProductsComponent,
+    DeleteProductsComponent,
+    UpdateProductsComponent
   ],
   imports: [
     BrowserModule,
@@ -45,9 +60,11 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     MatFormFieldModule,
     MatButtonModule,
     MatInputModule,
+    HttpClientModule,
     MatNativeDateModule,
     MatDatepickerModule,
     MatTabsModule,
+    CommonModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable

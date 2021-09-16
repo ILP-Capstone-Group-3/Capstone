@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delete Products</title>
+  <style>
+    form {
+      border-style: double;
+      height: 80%;
+      margin: 1% 1% 1% 1%;
+      padding: 1%;
+    }
+  </style>
+</head>
+
+<body>
+
+  <form #deleteRef="ngForm" (ngSubmit)="deleteProduct(deleteRef.value)">
+    <h1><b>Delete Products</b></h1>
+    <h3>
+     Name
+      <br />
+      <input type="text" name="name" [(ngModel)]="name" required />
+    </h3>
+    
+    <input type="reset" value="Clear" />
+    <input type="submit" value="Delete Product" [disabled]="!deleteRef.form.valid" />
+    <div>
+      {{message}}
+    </div>
+  </form>
+</body>
+</html>

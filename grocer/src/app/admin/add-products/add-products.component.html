@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Products</title>
+  <style>
+    form {
+      border-style: double;
+      height: 80%;
+      margin: 1% 1% 1% 1%;
+      padding: 1%;
+    }
+  </style>
+</head>
+
+<body>
+
+  <form #productRef="ngForm" (ngSubmit)="addProduct(productRef.value)">
+    <h1><b>Add Products</b></h1>
+    <h3>
+     Name
+      <br />
+      <input type="text" name="name" [(ngModel)]="name" required />
+    </h3>
+    <h3>
+      Price
+      <br />
+      $ <input type="number" min="0" oninput="validity.valid||(value='')" name="price" [(ngModel)]="price" required />
+    </h3>
+    <h3>
+      Quantity
+      <br />
+      <input type="number"  min="0" oninput="validity.valid||(value='')" name="quantity" [(ngModel)]="quantity" required />
+    </h3>
+    
+    <h3>
+      Description
+      <br />
+      <input type="text" name="description" [(ngModel)]="description" required />
+    </h3>
+    <h3>
+      Image Url
+      <br />
+     <input type="text" name="imageUrl" [(ngModel)]="imageUrl" required />
+    </h3>
+    <input type="reset" value="Clear" />
+    <input type="submit" value="Add Product" [disabled]="!productRef.form.valid" />
+    <div>
+      {{message}}
+    </div>
+  </form>
+</body>
+</html>

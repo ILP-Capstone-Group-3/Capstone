@@ -1,0 +1,33 @@
+User Account :
+1. firstname
+2. Lastname
+3. email
+4. password
+5. dob
+6. phone no
+7. address
+8. user id - after successfull registration a window should pop-up allowing user to see the user id.
+
+Admin Account:
+1.Username
+2. Password
+
+Employee Account:
+1.Employee ID
+2.Password
+3.Firstname
+4. Lastname
+5. email
+
+
+Products:
+1. Product Name
+2. Product Price
+3. Product Quantity
+4. Product Id
+5. Discount
+
+
+admin panel
+1. Log in - username and password 
+
