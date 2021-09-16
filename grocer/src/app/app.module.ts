@@ -23,6 +23,7 @@ import { AddProductsComponent } from "./admin/add-products/add-products.componen
 import { DeleteProductsComponent } from "./admin/delete-products/delete-products.component";
 import { HttpClientModule } from '@angular/common/http';
 import {UpdateProductsComponent} from "./admin/update-products/update-products.component"
+//import { ViewRequestsComponent} from "./admin/view-requests/view-requests.component"
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +35,8 @@ import {UpdateProductsComponent} from "./admin/update-products/update-products.c
     LoginComponent,
     AddProductsComponent,
     DeleteProductsComponent,
-    UpdateProductsComponent
+    UpdateProductsComponent,
+    //ViewRequestsComponent
 
   ],
   imports: [

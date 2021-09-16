@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-admin-portal',
   templateUrl: './admin-portal.component.html',
@@ -22,4 +23,11 @@ export class AdminPortalComponent implements OnInit {
     console.log("In delete employee component");
     
   }
+
+
+  addProduct(productRef: any){
+    this.router.navigate(['./adminPortal/addProducts']);
+
+  }
+
 }
