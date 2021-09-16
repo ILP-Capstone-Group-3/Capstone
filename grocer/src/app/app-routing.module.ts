@@ -9,7 +9,7 @@ import { AddProductsComponent } from './admin/add-products/add-products.componen
 import { DeleteProductsComponent } from './admin/delete-products/delete-products.component';
 import { UpdateProductsComponent } from './admin/update-products/update-products.component';
 import { LoginComponent } from "./login/login.component";
-//import { ViewRequestsComponent } from './admin/view-requests/view-requests.component';
+import { ViewRequestsComponent } from "./admin/view-requests/view-requests.component";
 
 
 
@@ -24,8 +24,8 @@ const routes: Routes = [
     children: [
       { path: 'addProducts', component: AddProductsComponent },
       { path: 'deleteProducts', component: DeleteProductsComponent },
-      { path: 'updateProducts', component: UpdateProductsComponent }
-     // { path: 'viewRequests', component: ViewRequestsComponent }
+      { path: 'updateProducts', component: UpdateProductsComponent },
+      { path: 'viewRequests', component: ViewRequestsComponent },
     ]
   }
 ];

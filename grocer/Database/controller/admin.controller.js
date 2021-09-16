@@ -163,14 +163,17 @@ let deleteProductByName = (req, res) => {
 }
 //Update product Details
 let updateProductPrice= (req,res)=> {
-    let name = req.body.name;
+    console.log("Test");
+    let productName = req.body.name;
     let updatedPrice = req.body.price;
 	
-    ProductModel.updateMany({name:name},{$set:{price:updatedPrice}},(err,result)=> {
+    ProductModel.updateOne({name:productName},{$set:{price:updatedPrice}},(err,result)=> {
         if(!err){
-            if(result.nModified>0){
+            console.log("requestBody", result);
+            if(result.modifiedCount>0){
                     res.send("Record updated succesfully")
             }else {
+
                     res.send("Record is not available");
             }
         }else {
@@ -186,7 +189,7 @@ let updateProductQuantity= (req,res)=> {
 	
     ProductModel.updateMany({name:productName},{$set:{quantity:updatedQuantity}},(err,result)=> {
         if(!err){
-            if(result.nModified>0){
+            if(result.modifiedCount>0){
                     res.send("Record updated succesfully")
             }else {
                     res.send("Record is not available");

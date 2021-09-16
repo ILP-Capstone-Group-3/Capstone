@@ -26,7 +26,8 @@ export class AdminService {
     return this.http.delete("http://localhost:8080/admin/deleteProductByName/" + name, { responseType: 'text' });
   }
 
-   updateProductPrice(productRef:any):any{
+   updateProductPrice(productRef:any): Observable<any>{
+    console.log("requestBody", productRef);
     return this.http.put("http://localhost:8080/admin/updateProductPrice",productRef,{responseType:'text'})
   }
 

@@ -21,7 +21,7 @@ quantityMessage:any;
   ngOnInit(): void {
   }
    updateProduct(updateRef: any) {
-   console.log(updateRef);
+   //console.log(updateRef);
     this.adminService.updateProductPrice(updateRef).subscribe((result:string)=> {
       this.productMessage=result;
      })
