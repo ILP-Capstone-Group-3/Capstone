@@ -1,17 +1,61 @@
 <div>
     <h1>User Panel</h1>
+    <a mat-raised-button color="primary" style="margin-bottom: 10px;" routerLink="/">Logout</a>
     <mat-tab-group style="text-align: center;">
         <mat-tab label="Shop">
             <!--"Select items" function-->
         </mat-tab>
         <mat-tab label="Orders">
             <!--Order functions-->
+            <br/>
+            <div [innerHTML]="orderTable"></div>
         </mat-tab>
         <mat-tab label="Edit Profile">
             <!--Edit profile functions-->
+            <form #editUserRef="ngForm" (ngSubmit)="editProfile(editUserRef)">
+                <h2>Edit Profile</h2>
+                All fields are optional. However, you must fill in both password fields if you wish to change it.<br/>
+                <mat-form-field>
+                    <mat-label>New Password</mat-label>
+                    <input matInput type="password" name="password" ngModel>
+                </mat-form-field><br/>
+                <mat-form-field>
+                    <mat-label>Confirm New Password</mat-label>
+                    <input matInput type="password" name="repassword" ngModel>
+                </mat-form-field><br/>
+                <mat-form-field>
+                    <mat-label>New Address</mat-label>
+                    <input matInput name="address" ngModel>
+                </mat-form-field><br/>
+                <mat-form-field>
+                    <mat-label>New Phone Number</mat-label>
+                    <input matInput name="phone" type="tel" ngModel>
+                </mat-form-field><br/>
+                <mat-form-field>
+                    <mat-label>New Email</mat-label>
+                    <input matInput type="email" name="email" ngModel>
+                </mat-form-field><br/>
+                <button type="submit" mat-raised-button color="primary">Register</button>
+                <p>{{editResponse}}</p>
+            </form>
         </mat-tab>
         <mat-tab label="Add Funds">
             <!--Funding functions-->
+            <br/>
+            <div><b>Current Funds: </b>{{currentFunds}}</div><br/>
+            <form #additionalFundsForm="ngForm"(ngSubmit)="updateFunds(additionalFundsForm)" >
+                <mat-form-field>
+                    <mat-label>Account Number</mat-label>
+                    <input matInput type="number" name="account_num" ngModel required>
+                </mat-form-field>
+                <br>
+                <mat-form-field>
+                    <mat-label>Amount of Added Funds</mat-label>
+                    <input matInput type="number" name="funds" ngModel required>
+                </mat-form-field>
+                <br>
+                <button type="submit" mat-raised-button color="primary" [disabled]="additionalFundsForm.invalid">Login</button>
+            </form>
         </mat-tab>
     </mat-tab-group>
 </div>
