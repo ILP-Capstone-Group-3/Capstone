@@ -1,4 +1,4 @@
-<div *ngIf="signInFlag">
+<!-- <div *ngIf="signInFlag">
     <h1>Employee Login</h1>
     <a routerLink="">Go Back</a>
     <form #loginRef="ngForm" (ngSubmit)="checkEmployee(loginRef)">
@@ -35,19 +35,31 @@
         <button type="submit" mat-raised-button color="primary" [disabled]="updatePassRef.invalid">Update Password</button>
     </form>
     <br/><span style="color: red;">{{changePasswordMessage}}</span>
-</div>
+</div> -->
 
 
-<div *ngIf="mainPageFlag">
-    <h1>Employee Panel</h1>
-    <button mat-raised-button color="primary" style="margin-bottom: 10px;" (click)="employeeLogout()">Logout</button>
+<!-- <div fxLayout="column" *ngIf="mainPageFlag"> -->
+<div fxLayout="column">
+    <mat-toolbar color="primary">
+        <mat-toolbar-row>
+          <span>Employee Panel</span>
+          <span class="example-spacer"></span>
+          <button mat-mini-fab (click)="employeeLogout()"><mat-icon>logout</mat-icon></button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <!-- <div fxLayout="row" fxLayoutAlign="space-between center" >
+        <div class="mat-title">Employee Panel</div>
+        <button mat-raised-button color="primary" style="margin-bottom: 10px;" (click)="employeeLogout()">Logout</button>
+        <button mat-mini-fab (click)="employeeLogout()" class="emp-panel-details"><mat-icon>logout</mat-icon></button>
+    </div> -->
+    <mat-divider></mat-divider>
     <mat-tab-group style="text-align: center;">
         <mat-tab label="Send Request">
             <!--"Select items" function-->
         </mat-tab>
         <mat-tab label="Update Order Status">
             <!--Order functions-->
-            
+            <app-update-order-status></app-update-order-status>
         </mat-tab>
         <mat-tab label="Unlock Users">
             <!--Edit profile functions-->
