@@ -115,29 +115,43 @@ eventEmitter.on('Ticket-Closed', function (data) {
 
 
 
-// Creating a new Ticket
-let createNewTicket = (req, res)=> {
-
-    let newTicket = new userTicketModel({
-        ticketid: random.generate(20),
-        email: req.user.email,
-        username: req.user.firstname + ' ' + req.user.lastname,
-        title: req.body.title,
-        description: req.body.description,
-        //filename: req.body.filename
-    });
-
-    newTicket.save(function (err) {
-        if (err) {
-            let response = autoresponse.generate(true, "Some error", 500, null);
-            res.send(response);
-        } else {
-            
-            let response = autoresponse.generate(false, "Ticket Raised Suuccessfully", 200, newTicket);
-            res.send(response);
-        }
-    });
+let createNewTicket = async (request, response)=>{
+    let user = request.body;  //receive the data from post method
+    let userInfo = await userTicketModel.findOne({name:user.name})
+    if (userInfo==null){
+    let result = await userTicketModel.insertMany(user)
+    response.send("Account created successfully")
+    console.log("successfully created")
+}else{
+    response.send("Email Id must be unique")
+    console.log("not created")
 }
+}
+
+
+// Creating a new Ticket
+// let createNewTicket = (req, res)=> {
+
+//     let newTicket = new userTicketModel({
+//         ticketid: random.generate(20),
+//         email: req.user.email,
+//         username: req.user.firstname + ' ' + req.user.lastname,
+//         title: req.body.title,
+//         description: req.body.description,
+//         //filename: req.body.filename
+//     });
+
+//     newTicket.save(function (err) {
+//         if (err) {
+//             let response = autoresponse.generate(true, "Some error", 500, null);
+//             res.send(response);
+//         } else {
+            
+//             let response = autoresponse.generate(false, "Ticket Raised Suuccessfully", 200, newTicket);
+//             res.send(response);
+//         }
+//     });
+//}
 
 // Find a Single Ticket using the ID
 let getSingleTicket = (req, res) =>{

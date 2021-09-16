@@ -19,23 +19,24 @@
     <div class="row">
       <div class="col-xs-12 col-lg-4">
       <h2>Submit a Ticket</h2>
-        <form novalidate name="submitTicketForm" class='submitTicketForm' ng-submit='submitTicket(ticket)'>
+        <form [formGroup]="ticketRef" novalidate name="submitTicketForm"  (ngSubmit)="submitTicket()">
           <div class="form-group">
             <label>Name</label>
-            <input type="text" class="form-control" ng-model="ticket.author">
+            <input type="text" class="form-control" formControlName="name">
           </div>
           <div class="form-group">
             <label>Subject</label>
-            <input type="text" class="form-control" >
+            <input type="text" class="form-control"  formControlName="subject">
           </div>
           <div class="form-group">
             <label>Issue</label>
-            <textarea type="text" class="form-control" ng-model="ticket.issue"></textarea>
+            <textarea type="text" class="form-control" formControlName="issue"></textarea>
           </div>
-          <div class="form-group">
-            <label>Chat Link</label>
+          <!-- <div class="form-group"> -->
+            <!-- <label>Chat Link</label> -->
             <!-- <input type="text" class="form-control" ng-model="ticket.chatUrl"></input> -->
-          </div>
+          <!-- </div> -->
+          <!-- <input type="submit" value="Sign In"> -->
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
@@ -53,9 +54,9 @@
               <div class="col-md-8"></div>
             </div> <!-- /row -body- -->
             <div class="row ticket-footer">
-              <div class="col-md-1"><br /><span class="ticket-delete fa fa-trash-o" ng-click="deleteTicket(ticket)"></span></div>
+              <div class="col-md-1"><br /><span class="ticket-delete fa fa-trash-o" ng-click="deleteTicket()"></span></div>
               <div class="col-md-1"><br /><span class="ticket-resolve fa fa-check" ng-click="resolveTicket()"></span></div>
-              <div class="col-md-2"><br /><span class="ticket-archive fa fa-archive" ng-click="archiveTicket(ticket)"></span></div>
+              <div class="col-md-2"><br /><span class="ticket-archive fa fa-archive" ng-click="archiveTicket()"></span></div>
               <div class="col">
                 Submitted by
                 <br />
