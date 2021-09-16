@@ -1,0 +1,38 @@
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<nav class="nav navbar-light bg-light" style="padding: 20px; border-bottom: solid black 1px; ">
+
+  <a class="navbar-brand" routerLink="/adminPortal/addProducts" style="color: black;">Admin </a>
+
+  <li class="nav-item" routerLinkActive="active">
+    <a class="nav-link router-link" routerLink="/adminPortal/addProducts">Add Products</a>
+  </li>
+
+  <li class="nav-item" routerLinkActive="active">
+    <a class="nav-link router-link" routerLink="/adminPortal/deleteProducts">Delete Products</a>
+  </li>
+
+  <li class="nav-item" routerLinkActive="active">
+    <a class="nav-link router-link" routerLink="/adminPortal/updateProducts">Update Products</a>
+  </li>
+
+  <li class="nav-item" routerLinkActive="active">
+    <a class="nav-link router-link" routerLink="/adminPortal/viewRequests">View Requests</a>
+  </li>
+
+  <li class="nav-item" routerLinkActive="active">
+    <a class="nav-link router-link" routerLink="/adminPortal/addEmployee">Add Employee</a>
+  </li>
+  
+  <li class="nav-item" routerLinkActive="active">
+    <a class="nav-link router-link" routerLink="/adminPortal/deleteEmployee">Delete Employee</a>
+  </li>
+  <li class="nav-item" routerLinkActive="active">
+    <a class="nav-link router-link" routerLink="/adminPortal/generateReports">Generate Reports</a>
+  </li>
+  <li class="nav-item" routerLinkActive="active">
+    <a class="nav-link router-link" routerLink="">Log Out</a>
+  </li>
+</nav>
+ <router-outlet></router-outlet>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update Products</title>
+  <style>
+    form {
+      border-style: double;
+      height: 50%;
+      margin: 1% 1% 1% 1%;
+      padding: 1%;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <form #updateRef="ngForm" (ngSubmit)="updateProduct(updateRef.value)">
+    <h1><b>Update Products</b></h1>
+    <h3>
+     Name
+      <br />
+      <input type="text" name="name" [(ngModel)]="name" required />
+    </h3>
+    <h3>
+      Price
+      <br />
+      $ <input type="number" min="0"  oninput="validity.valid||(value='')" name="price" [(ngModel)]="price"  required/>
+    </h3>
+    <input type="reset" value="Clear" />
+    <input type="submit" value="Update Product" [disabled]="!updateRef.form.valid" />
+    <div>
+      {{productMessage}}
+    </div>
+    </form>
+
+    <form #quantityRef="ngForm" (ngSubmit)="updateQuantity(quantityRef.value)">
+    <h1><b>Update Quantity</b></h1>
+    <h3>
+     Name
+      <br />
+      <input type="text" name="name1" [(ngModel)]="name1" required />
+    </h3>
+    <h3>
+      Quantity
+      <br />
+      <input type="number" min="0" oninput="validity.valid||(value='')" name="quantity" [(ngModel)]="quantity" required/>
+    </h3>
+    <input type="reset" value="Clear" />
+    <input type="submit" value="Update quantity" [disabled]="!quantityRef.form.valid" />
+    <div>
+      {{quantityMessage}}
+    </div>
+    </form>
+</body>
+</html>
