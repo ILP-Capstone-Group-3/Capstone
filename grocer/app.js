@@ -40,7 +40,7 @@ const mongooseDbOption ={                           // to avoid warning
          //ready to connect 
 
 //Connect to cloud DB
-// mongoose.connect(cloudURL).then(() => {//shamanthaka changed to local db connection
+// mongoose.connect(cloudURL).then(() => {// changed to local db connection
 //     console.log('Connected to DB');
 // })
 // .catch(()=> {
