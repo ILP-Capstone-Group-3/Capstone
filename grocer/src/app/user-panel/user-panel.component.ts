@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { UserService } from '../services/user.service';
+
 
 @Component({
   selector: 'app-user-panel',
@@ -9,12 +11,16 @@ import { Router } from '@angular/router';
 })
 export class UserPanelComponent implements OnInit {
 
+  constructor(public router:Router, private userService:UserService, private route:ActivatedRoute) { }
+
   //Strings used for the html page
   orderTable:string="";
   editResponse:string="";
   currentFunds:string="$"
+  fundsErrorMessage:string="";
 
-  money:number = 5; //CHANGE THIS LATER WHEN WE CAN GET THE ACTUAL VALUE
+  userId:number=this.route.snapshot.params["id"];
+
 
   //Function used to get all the user's orders
   orderStatus(): void {
@@ -42,28 +48,30 @@ export class UserPanelComponent implements OnInit {
     this.orderTable=tableContents+tableEnd;
   }
 
-  updateCurrentFunds(): void{
+  getStartingFunds(): void{
+    let curUser:any = null;
     //get the funds currently on the profile.
+    this.userService.getUserFromId(this.userId).subscribe(data=>{
+      //we have found the user.
+      curUser = data;
+      this.currentFunds="$"+curUser.funds.toString()
+    },
+    error=> {
+      console.log(error);
+    })
 
     //By default, let's assume it's five bucks
-    this.currentFunds="$"+this.money.toString();
   }
 
-  constructor(public router:Router) { }
 
   ngOnInit(): void {
     this.orderStatus();
-    this.updateCurrentFunds();
+    this.getStartingFunds();
   }
 
   //Helper function to check if edit profile stuff is empty or not
   checkIfEmpty(newProfileStuff:any): boolean {
-    if(newProfileStuff.password=="" && newProfileStuff.address=="" && newProfileStuff.email=="" && newProfileStuff.phone==""){
-      return true;
-    }
-    else if(newProfileStuff.password==null && newProfileStuff.address==null && newProfileStuff.email==null && newProfileStuff.phone==null){
-      return true;
-    }
+    if(newProfileStuff=="" || newProfileStuff==null) return true;
     else return false;
   }
 
@@ -71,26 +79,82 @@ export class UserPanelComponent implements OnInit {
   editProfile(editUserRef:NgForm): void {
     let newProfileValue = editUserRef.value;
     editUserRef.resetForm();
-    console.log(typeof newProfileValue);
+    
+    let curUser:any = null;
 
-    if(newProfileValue.password!=newProfileValue.repassword){
-      this.editResponse="Passwords do not match!"
-    }
-    else if (this.checkIfEmpty(newProfileValue)){
-      this.editResponse="No fields filled!"
-    }
-    else{
-      //Do stuff with info. It will parse what things are there or not.
+    this.userService.getUserFromId(this.userId).subscribe(data=>{
+      curUser = data;
+      let passwordMismatch = false;
+      let updatedValue = false;
 
-      this.editResponse="Profile updated!"
-    }
+      //Checks through all fields to see if there's something to be updted
+      if(!this.checkIfEmpty(newProfileValue.password)){
+        if(newProfileValue.password==newProfileValue.repassword) {
+          curUser.password = newProfileValue.password;
+          updatedValue = true;
+        } 
+        else passwordMismatch = true;
+      }
+      if(!this.checkIfEmpty(newProfileValue.address)){
+        curUser.address=newProfileValue.address;
+        updatedValue=true;
+      }
+      if(!this.checkIfEmpty(newProfileValue.phone)){
+        curUser.phone=newProfileValue.phone;
+        updatedValue=true;
+      }
+      if(!this.checkIfEmpty(newProfileValue.email)){
+        curUser.email=newProfileValue.email;
+        updatedValue=true;
+      }
+
+      //If there is something to be updated, update it.
+      if(updatedValue){
+        this.userService.updateUser(this.userId,curUser).subscribe(response=>{
+          this.editResponse="Profile updated!";
+        if(passwordMismatch) this.editResponse+=" However, your password failed to be changed due to a mismatch."
+        },
+        error=>{
+          console.log(error);
+          this.editResponse="There was an error updating your profile."
+        })
+      }
+      else{
+        this.editResponse="Profile failed to updated.";
+        if(passwordMismatch) this.editResponse+=" Passwords did not match."
+      }
+    },
+    error=>{
+      console.log(error);
+      this.editResponse="Profile failed to be updated.";
+    })
+
+
   }
 
   //Allows the user to add funds.
   updateFunds(additionalFundsForm:NgForm):void {
+    let curUser:any = null;
     let additionalFunds = additionalFundsForm.value.funds;
-    this.money += +additionalFunds;
-    this.updateCurrentFunds();
+    this.userService.getUserFromId(this.userId).subscribe(data=>{
+      //we have found the user.
+      curUser = data;
+      curUser.funds+=additionalFunds;
+      //update their funds
+      this.userService.updateUser(this.userId,curUser).subscribe(response=> {
+        this.currentFunds="$"+curUser.funds.toString();
+        this.fundsErrorMessage="";
+      },
+      error=>{
+        console.log(error);
+        this.fundsErrorMessage="Funds failed to be updated."
+      });
+    },
+    error=> {
+      //If there is an error
+      console.log(error);
+      this.fundsErrorMessage="Funds failed to be updated."
+    })
   }
 
 }

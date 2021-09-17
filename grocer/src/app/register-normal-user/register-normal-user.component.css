@@ -14,6 +14,11 @@ h2 {
 .form-dimensions::after {
     padding-left: 30%;
 }
+
+form { 
+    margin: 0 auto; 
+    width:250px;
+}
   
 .full-width {
     width: 72%;

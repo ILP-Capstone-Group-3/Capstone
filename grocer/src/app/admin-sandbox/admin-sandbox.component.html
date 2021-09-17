@@ -1,0 +1,94 @@
+<div>
+    <h1>Admin Sandbox</h1>
+    <p>Test functions:</p>
+    <a routerLink="">Logout</a>
+    <mat-tab-group>
+        <mat-tab label="Add Employee">
+            <!--Add employee form-->
+            <h2>Add an Employee Account</h2>
+            <form class="form-dimensions" #addEmployeeRef="ngForm" (ngSubmit)="addEmployee(addEmployeeRef)">
+                <mat-form-field style="width: 35%;">
+                    <mat-label>First Name</mat-label>
+                    <input matInput name="firstname" ngModel required>
+                </mat-form-field>
+                &nbsp;
+                <mat-form-field style="width: 35%;">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput name="lastname" ngModel required>
+                </mat-form-field>
+                <br>
+                <mat-form-field class="full-width">
+                    <mat-label>Email</mat-label>
+                    <input matInput type="email" name="email" placeholder="john@example.com" ngModel required>
+                </mat-form-field>
+                <br>
+                <mat-form-field class="full-width">
+                    <mat-label>Default Password</mat-label>
+                    <input matInput type="text" name="password" ngModel required>
+                </mat-form-field>
+                <br>
+                <button type="submit" mat-raised-button color="primary" [disabled]="addEmployeeRef.invalid">Create Account</button>
+            </form>
+        </mat-tab>
+        <mat-tab label="Delete Employee">
+            <!--Delete employee form-->
+            <h2>Delete an Employee Account</h2>
+            <form class="form-dimensions" #delEmployeeRef="ngForm" (ngSubmit)="deleteEmployee(delEmployeeRef)">
+                <mat-form-field>
+                    <mat-label>Employee ID</mat-label>
+                    <input matInput name="empid" minlength="6" ngModel required>
+                </mat-form-field>
+                <br>
+                <button type="submit" mat-raised-button color="primary" [disabled]="delEmployeeRef.invalid">Delete</button>
+            </form>
+        </mat-tab>
+        <mat-tab label="Generate Reports">
+            <!--Generate reports-->
+            <h2>Generate Reports</h2>
+            <form class="form-dimensions" #reportRef="ngForm" (ngSubmit)="generateReports(reportRef)">
+                <mat-form-field>
+                    <mat-label>Time</mat-label>
+                    <select matNativeControl name="reporttype" ngModel required>
+                        <option value="daily">Daily</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="monthly">Monthly</option>
+                    </select>
+                </mat-form-field>
+                &nbsp;
+                <mat-form-field>
+                    <mat-label>User ID</mat-label>
+                    <input matInput name="userId" ngModel>
+                </mat-form-field>
+                &nbsp;
+                <mat-form-field>
+                    <mat-label>Product Name</mat-label>
+                    <input matInput name="productId" ngModel>
+                </mat-form-field>
+                <br>
+                <button type="submit" mat-raised-button color="primary" [disabled]="reportRef.invalid">Generate</button>
+            </form>
+            <br>
+            <hr>
+            <!--Generation results go here-->
+            <div>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Product Name</th>
+                            <th>Date of Purchase</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let report of reportArray">
+                            <td>{{report.userid}}</td>
+                            <td>{{report.product}}</td>
+                            <td>{{report.month+1}}-{{report.day}}-{{report.year}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+        </mat-tab>
+    </mat-tab-group>
+</div>

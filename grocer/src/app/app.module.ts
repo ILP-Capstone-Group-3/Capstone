@@ -1,48 +1,49 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { UserPanelComponent } from './user-panel/user-panel.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RegisterNormalUserComponent } from './register-normal-user/register-normal-user.component';
-import { FirstPageComponent } from './first-page/first-page.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatTabsModule } from '@angular/material/tabs';
-import { environment } from '../environments/environment';
-import { UserLoginComponent } from './user-login/user-login.component';
-import { EmployeePanelComponent } from './employee-panel/employee-panel.component';
-import { UpdateOrderStatusComponent } from './employee-panel/update-order-status/update-order-status.component';
+import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import {MatIconModule} from '@angular/material/icon';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {MatSelectModule} from '@angular/material/select';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatCardModule} from '@angular/material/card';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+import { AdminSandboxComponent } from './admin-sandbox/admin-sandbox.component';
+import { AddProductsComponent } from "./admin/add-products/add-products.component";
 // import { AddProductsComponent } from './admin/add-products/add-products.component';
 // import { AdminPortalComponent } from './admin/admin-portal/admin-portal.component';
 // import { DeleteProductsComponent } from './admin/delete-products/delete-products.component';
 // import { UpdateProductsComponent } from './admin/update-products/update-products.component';
 // import { LoginComponent } from './login/login.component';
-
 import { AdminPortalComponent } from "./admin/admin-portal/admin-portal.component";
-import { LoginComponent } from "./login/login.component";
-import { AddProductsComponent } from "./admin/add-products/add-products.component";
 import { DeleteProductsComponent } from "./admin/delete-products/delete-products.component";
-import {UpdateProductsComponent} from "./admin/update-products/update-products.component";
+import { UpdateProductsComponent } from "./admin/update-products/update-products.component";
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { EditProfileComponent } from './employee-panel/edit-profile/edit-profile.component';
+import { EmployeePanelComponent } from './employee-panel/employee-panel.component';
 import { OrderCancelComponent } from './employee-panel/order-cancel/order-cancel.component';
 import { SendRequestComponent } from './employee-panel/send-request/send-request.component';
 import { UnlockUsersComponent } from './employee-panel/unlock-users/unlock-users.component';
-import { EditProfileComponent } from './employee-panel/edit-profile/edit-profile.component';
+import { UpdateOrderStatusComponent } from './employee-panel/update-order-status/update-order-status.component';
+import { FirstPageComponent } from './first-page/first-page.component';
+import { LoginComponent } from "./login/login.component";
+import { RegisterNormalUserComponent } from './register-normal-user/register-normal-user.component';
+import { UserLoginComponent } from './user-login/user-login.component';
+import { UserPanelComponent } from './user-panel/user-panel.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,7 +61,9 @@ import { EditProfileComponent } from './employee-panel/edit-profile/edit-profile
     OrderCancelComponent,
     SendRequestComponent,
     UnlockUsersComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    AdminSandboxComponent,
+    EmployeePanelComponent
   ],
   imports: [
     BrowserModule,
@@ -75,7 +78,11 @@ import { EditProfileComponent } from './employee-panel/edit-profile/edit-profile
     HttpClientModule,
     MatNativeDateModule,
     MatDatepickerModule,
+    MatSelectModule,
+    MatIconModule,
+    MatDialogModule,
     MatTabsModule,
+    MatCardModule,
     CommonModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,

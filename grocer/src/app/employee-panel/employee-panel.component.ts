@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { EmployeeService } from '../services/employee.service';
 
 @Component({
   selector: 'app-employee-panel',
@@ -18,36 +19,77 @@ export class EmployeePanelComponent implements OnInit {
   loginMessage:string="";
   changePasswordMessage:string="";
 
+  //Holds the employee's login information
+  employeeId:number=-1;
+  employeeDefaultPass:string=""; //used for first login
+
   firstLogin:boolean=true;//replace these later
   password:string="123";
 
-  constructor(public router:Router) { }
+
+
+  constructor(public router:Router, private EmployeeService:EmployeeService) { }
 
   ngOnInit(): void {
   }
 
-  //Check the employee upon logging in
+  developerCreateEmployee(): void {
+    let fakeEmployee = {_id:8675309,firstname:"Jane",lastname:"Doe",email:"fakeEmail@yahoo.com",password:"123",hasDefaultPass:true};
+    this.EmployeeService.registerEmployee(fakeEmployee)
+      .subscribe(
+        response=> {
+          console.log(response);
+          console.log("Fake employee created");
+        },
+        error=> {
+          console.log(error);
+        });
+  }
+
+  resetFakeEmployee(): void{
+    let fakeEmployee = {_id:8675309,firstname:"Jane",lastname:"Doe",email:"fakeEmail@yahoo.com",password:"123",hasDefaultPass:true};
+    this.EmployeeService.updateEmployee(8675309,fakeEmployee)
+      .subscribe(
+        response=> {
+          console.log(response);
+          console.log("Fake Employee reset");
+        },
+        error=> {
+          console.log(error);
+        }
+      )
+  }
+
+
+    //Check the employee upon logging in
   checkEmployee(loginRef:NgForm): void {
     let loginForm = loginRef.value;
-  
-    //The ifs will need to be changed when Mongo is set up
-    if (loginForm.username == "8675309" && loginForm.password == this.password) {
-      this.loginMessage="";
-      if(this.firstLogin){ //Checks if first login
-        this.signInFlag=false; //go to firstLogin "page" if true
-        this.firstLoginFlag=true;
+
+    let curEmployee: any = null;
+    //Get the employee
+    this.EmployeeService.getEmployeeFromId(+loginForm.username).subscribe(data=> {
+      curEmployee=data;
+
+      //check if password matches
+      if(loginForm.password==curEmployee.password){
+        this.loginMessage="";
+        this.signInFlag=false; //Disable sign in page
+        //determine page to go to
+        if(curEmployee.hasDefaultPass){ 
+          this.firstLoginFlag=true;
+          this.employeeId= +loginForm.username;
+          this.employeeDefaultPass=curEmployee.password; //hold this to force emp to change
+        }
+        else this.mainPageFlag = true;
       }
-      else{
-        //Otherwise go directly to the main page
-        this.signInFlag=false;
-        this.mainPageFlag=true;
-      }
-    }
-    else{
-      //Show that Login failed
+      else{this.loginMessage="Login Failed"}
+    },
+    error=> {
+      console.log(error);
       this.loginMessage="Login Failed";
-    }
+    });
   }
+
 
   //Update the password upon first sign in
   updateFirstPassword(updatePassRef:NgForm): void {
@@ -56,16 +98,31 @@ export class EmployeePanelComponent implements OnInit {
     if(updatePassForm.password!=updatePassForm.repassword){
       this.changePasswordMessage="Passwords do not match!"
     }
-    else{//update password and move onto main page
-      this.changePasswordMessage="";
-      this.firstLoginFlag=false;
-      this.mainPageFlag=true;
-
-      //Change this when mongo is set up
-      //(Currently this doesn't work, since login goes back to
-      //main page, but it's not like it's fully functional anyway yet)
-      this.password=updatePassForm.password;
-      this.firstLogin=false;
+    else if(updatePassForm.password==this.employeeDefaultPass){
+      //Force the employee to change it
+      this.changePasswordMessage="You must change the password from the default."
+    }
+    else{
+      //Otherwise, let's update
+      let curEmployee: any = null;
+      this.EmployeeService.getEmployeeFromId(this.employeeId).subscribe(data=>{
+        curEmployee=data;
+        curEmployee.password=updatePassForm.password;
+        curEmployee.hasDefaultPass=false;
+        this.EmployeeService.updateEmployee(this.employeeId,curEmployee).subscribe(response=>{
+          this.firstLoginFlag=false;
+          this.mainPageFlag=true;
+          this.changePasswordMessage="";
+        },
+        error=>{
+          console.log(error);
+          this.changePasswordMessage="There was an error changing your password."
+        });
+      },
+      error=>{
+        console.log(error);
+        this.changePasswordMessage="There was an error changing your password."
+      })
     }
   }
 

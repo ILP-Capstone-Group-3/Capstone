@@ -1,31 +1,36 @@
 <div>
-    <a routerLink="/userLogin">Back to Login</a>
-    <br><br>
+    <h1>Grocery HUB</h1>
     <form class="form-dimensions" #registerRef="ngForm" (ngSubmit)="registerUser(registerRef)">
-        <h2>New User Registration</h2>
-        <mat-form-field>
+        <button mat-fab color="warn" aria-label="Back to Login" routerLink="/userLogin">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h1>New User Registration</h1>
+        <mat-form-field style="width: 35%;">
             <mat-label>First name</mat-label>
             <input matInput name="firstname" ngModel required>
         </mat-form-field>
-        <mat-form-field>
+        &nbsp;
+        <mat-form-field style="width: 35%;">
             <mat-label>Last name</mat-label>
             <input matInput name="lastname" ngModel required>
         </mat-form-field>
         <br>
         <mat-form-field class="full-width">
             <mat-label>Email</mat-label>
-            <input matInput type="email" placeholder="john@example.com" name="email" ngModel required>
+            <input matInput type="email" placeholder="Ex. john@example.com" name="email" ngModel required>
         </mat-form-field>
         <br>
-        <mat-form-field>
+        <mat-form-field style="width: 25%;">
             <mat-label>Date of Birth</mat-label>
             <input matInput [matDatepicker]="picker" name="dob" ngModel required>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
-        <mat-form-field>
+        &nbsp;
+        <mat-form-field style="width: 45%;">
             <mat-label>Phone Number</mat-label>
-            <input matInput name="phone" type="tel" ngModel required>
+            <span matPrefix>+1 &nbsp;</span>
+            <input matInput name="phone" type="tel" placeholder="Ex. 555-555-1234" ngModel required>
         </mat-form-field>
         <br>
         <mat-form-field class="full-width">
@@ -35,7 +40,7 @@
         <br>
         <mat-form-field class="full-width">
             <mat-label>Password</mat-label>
-            <input matInput type="password" name="password" minlength="6" ngModel required>
+            <input matInput type="password" name="password" ngModel required>
         </mat-form-field>
         <br>
         <mat-form-field class="full-width">
