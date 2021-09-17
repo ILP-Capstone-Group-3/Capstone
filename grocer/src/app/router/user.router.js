@@ -1,31 +1,17 @@
-module.exports = app => {
-    // Import the user controller
-    const users = require("../controller/user.controller");
+let express = require("express");
+let router = express.Router();  //router reference. 
+let UserController = require("../controller/user.controller.js");
 
-    var router = require("express").Router();
+//mapping sub path with http methods.
+router.post("/login",UserController.login);
+router.post("/signup",UserController.signup); 
+router.get("/", UserController.test);
+router.get("/allUserDetails", UserController.getAllUserDetails);
+router.put("/updateUserFunds", UserController.updateUserFunds);
+router.put("/editUserDetails", UserController.editUserDetails);
 
-    // IMPORTANT: the router.post, router.get, etc. matter! You can 
-    // also have multiple router actions (ex. having 2 router.post).
-    //
-    // Here is a guide on what to use:
-    // --------------------------------
-    // router.post:   Adding to the database
-    // router.get:    Retrieving data
-    // router.put:    Updating data
-    // router.delete: Deleting data
-    // --------------------------------
+//look for userId and execute the userById method
+//any route containing :userId, our app will first execute userById() method
+//router.param("userId", userById);
 
-    // Create a new user
-    // The first parameter is a url used in the node server
-    // The second parameter is the function to use from the controller
-    router.post("/", users.register);
-
-    // Get user by id
-    router.get("/:id", users.findOne);
-
-    // Update a user by id
-    router.put("/:id", users.updateOne);
-
-    // Since this is the router for users, we use /api/users
-    app.use("/api/users", router);
-}
+module.exports=router;

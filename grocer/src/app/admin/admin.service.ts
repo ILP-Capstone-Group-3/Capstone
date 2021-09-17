@@ -11,34 +11,35 @@ export class AdminService {
   constructor(public http: HttpClient) { }
 
   storeEmployeeDetailsInfo(employeeRef: any): Observable<any> {
-     return this.http.post("http://localhost:4200/admin/addEmployeeDetails", employeeRef, { responseType: "text" })
+     return this.http.post("http://localhost:8080/admin/addEmployeeDetails", employeeRef, { responseType: "text" })
   }
 
   deleteEmployeeByEmail(email: any): Observable<any> {
-    return this.http.delete("http://localhost:4200/admin/deleteEmployeeByEmail/" + email, { responseType: 'text' });
+    return this.http.delete("http://localhost:8080/admin/deleteEmployeeByEmail/" + email, { responseType: 'text' });
   }
 
   storeProductDetailsInfo(productRef: any): Observable<any> {
-     return this.http.post("http://localhost:4200/admin/addProductDetails", productRef, { responseType: "text" })
+     return this.http.post("http://localhost:8080/admin/addProductDetails", productRef, { responseType: "text" })
   }
 
   deleteProductByName(name: any): Observable<any> {
-    return this.http.delete("http://localhost:4200/admin/deleteProductByName/" + name, { responseType: 'text' });
+    return this.http.delete("http://localhost:8080/admin/deleteProductByName/" + name, { responseType: 'text' });
   }
 
-   updateProductPrice(productRef:any):any{
-    return this.http.put("http://localhost:4200/admin/updateProductPrice",productRef,{responseType:'text'})
+   updateProductPrice(productRef:any): Observable<any>{
+    console.log("requestBody", productRef);
+    return this.http.put("http://localhost:8080/admin/updateProductPrice",productRef,{responseType:'text'})
   }
 
   updateProductQuantity(quantityRef:any):any{
-    return this.http.put("http://localhost:4200/admin/updateProductQuantity",quantityRef,{responseType:'text'})
+    return this.http.put("http://localhost:8080/admin/updateProductQuantity",quantityRef,{responseType:'text'})
   }
     retrieveAllEmployeeRequests(): Observable<EmployeeRequests[]> {
-      return this.http.get<EmployeeRequests[]>("http://localhost:4200/admin/allEmployeeRequests");
+      return this.http.get<EmployeeRequests[]>("http://localhost:8080/admin/allEmployeeRequests");
   }
 
   updateRequests(updatedRequests: Array<EmployeeRequests>) {
-    return this.http.put<{ message: string, employeeRequests: any }>("http://localhost:4200/admin/updateRequests", updatedRequests);
+    return this.http.put<{ message: string, employeeRequests: any }>("http://localhost:8080/admin/updateRequests", updatedRequests);
   }
 
 }

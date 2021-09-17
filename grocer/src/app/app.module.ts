@@ -43,7 +43,7 @@ import { LoginComponent } from "./login/login.component";
 import { RegisterNormalUserComponent } from './register-normal-user/register-normal-user.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { UserPanelComponent } from './user-panel/user-panel.component';
-
+import { ViewRequestsComponent } from "./admin/view-requests/view-requests.component";
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,7 +63,9 @@ import { UserPanelComponent } from './user-panel/user-panel.component';
     UnlockUsersComponent,
     EditProfileComponent,
     AdminSandboxComponent,
-    EmployeePanelComponent
+    EmployeePanelComponent,
+    ViewRequestsComponent
+
   ],
   imports: [
     BrowserModule,

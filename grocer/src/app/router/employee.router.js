@@ -1,34 +1,13 @@
-module.exports = app => {
-    // Import the user controller
-    const employees = require("../controller/employee.controller");
+let express = require("express");
+let router = express.Router();  //router reference. 
+let EmployeeController = require("../controller/employee.controller.js");
 
-    var router = require("express").Router();
+//mapping sub path with http methods.
+router.post("/login",EmployeeController.login);
+router.post("/signup", EmployeeController.signup);
+router.post("/submitRequest", EmployeeController.submitRequest);
+router.get("/allEmployeeDetails", EmployeeController.getAllEmploeeDetails);
+router.get("/retrieveRequests/:username", EmployeeController.retrieveRequests);
+router.put("/updateEmployeePassword", EmployeeController.updateEmployeePassword);
 
-    // IMPORTANT: the router.post, router.get, etc. matter! You can 
-    // also have multiple router actions (ex. having 2 router.post).
-    //
-    // Here is a guide on what to use:
-    // --------------------------------
-    // router.post:   Adding to the database
-    // router.get:    Retrieving data
-    // router.put:    Updating data
-    // router.delete: Deleting data
-    // --------------------------------
-
-    // Create a new employee
-    // The first parameter is a url used in the node server
-    // The second parameter is the function to use from the controller
-    router.post("/", employees.register);
-
-    // Get employee by id
-    router.get("/:id", employees.findOne);
-
-    // Delete an employee by id
-    router.delete("/:id", employees.deleteOne);
-
-    // Update an employee by id
-    router.put("/:id", employees.updateOne);
-
-    // Since this is the router for users, we use /api/users
-    app.use("/api/employees", router);
-}
+module.exports=router;
