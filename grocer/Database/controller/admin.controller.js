@@ -266,7 +266,6 @@ let productQuantityIncreaseRequest = (req, res) => {
 //Unlock User Account
 let UnlockUserAccount = (req, res) => {
     let username = req.body.userName;
-
     UserModel.updateOne({ userName: username }, { $set: { numAttempts: 0 } }, (err, result) => {
         if(result) {
             res.json(result);
