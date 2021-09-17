@@ -1,144 +1,81 @@
-let UserModel = require("../model/user.model.js");
-const bcrypt = require("bcrypt");
-const jwt = require('jsonwebtoken');
+const db = require("../models");
+// This is how we access the user database
+const User = db.users;
 
-let signup = (req, res, next) => {
-        const User = new UserModel({
-          email: req.body.email,
-          password: req.body.password,
-          userName: req.body.userName,
-          firstName: req.body.firstName,
-          lastName: req.body.lastName,
-          paymentMethods: 0,
-          numAttempts: 0,
-          dateOfBirth: req.body.date,
-          phoneNumber: req.body.phoneNumber,
-          shippingAddresses: req.body.addresses
+// Below are all exported functions to help us in database manipulation
+
+// Register a new user
+exports.register = (request, response)=> {
+    // First, we grab the values from the parameters and put them into a
+    // new user object.
+    //
+    // NOTE: request.body is used for grabbing the parameters!
+    const user = new User({
+        _id: request.body._id,
+        firstname: request.body.firstname,
+        lastname: request.body.lastname,
+        email: request.body.email,
+        dob: request.body.dob,
+        phone: request.body.phone,
+        address: request.body.address,
+        password: request.body.password,
+        funds: request.body.funds,
+        attemptedLogins: request.body.attemptedLogins,
+        isLocked: request.body.isLocked
+    });
+
+    // This portion saves the user object to the database.
+    // save is from Object.save()
+    user.save(user)
+    .then(data => {
+        response.send(data); // This just sends the data in the web console
+    })
+    .catch(err => {
+        response.status(500).send({
+            message:
+                err.message || "Some error occurred registering the user"
         });
-        User.save()
-          .then(result => {
-            res.status(201).json({
-              message: 'User created!',
-              result: result
-            });
-          })
-          .catch(err => {
-            res.status(500).json({
-              error: err
-            })
-          })
-      
-  }
+    });
+};
 
-let login = (req, res, next) => {
-    let fetchedUser;
-    // attempt to find user
-  UserModel.findOne({ userName: req.body.userName })
-      .then(user => {
-        // throws error if user not found by userName
-        if(!user){
-          throw new Error('Auth failed')
-        }
-        // if user is found, set user equal to fetched user
-        fetchedUser = user;
-        // bcrypt is a node module used to encrypt password
-        // here we use bcrypts compare method to check whether entered password is equal to hashed
-        // password stored in DB
-        return bcrypt.compare(req.body.password, user.password)
-      })
-      .then(result => {
-        // if result is false, wrong password was entered
-        if(!result){
-          return res.status(401).json({
-            message: "Auth failed"
-          });
-        }
-        // if result is true, we use jason web token module to create a token so token is used to authenticate user session
-        // 
-        const token = jwt.sign(
-          {email: fetchedUser.email, userId: fetchedUser._id },
-          'secret_this_should_be_longer',
-          {expiresIn: "1h"});
-        // npm install --save jsonwebtoken
-        res.status(200).json({
-          token: token, fetchedUser: fetchedUser, expiresIn: 3600
+// Retrieve a user based on an id
+exports.findOne = (request, response)=> {
+    const id = request.params.id;
+
+    // findById is a database function, not user defined
+    User.findById(id).then(data=> {
+        if (!data) 
+            response.status(404).send({message:"No user was found with ID " + id});
+        else response.send(data);
+    })
+    .catch(err=> {
+        response.status(500).send({message:"Error: Could not retrieve user with ID " + id});
+    });
+};
+
+// Update a user's details based on their id
+exports.updateOne = (request, response)=> {
+    // Grab the "id" parameter from the URL, which looks like
+    // http://localhost:9090/api/users/id
+    //
+    // NOTE: notice how it doesn't grab the id from the angular server,
+    //       but instead grabs it from the node server! Node server port 
+    //       is 9090, angular is 4200.
+    const id = request.params.id;
+
+    // findByIdAndUpdate is part of the database library
+    // request.body is the entirety of the content to modify in the database
+    User.findByIdAndUpdate(id, request.body, { useFindAndModify: false })
+        .then(data=> {
+            if (!data) {
+                request.status(404).send({
+                    message:`Cannot update user with id=${id}. It probably doesn't exist.`
+                });
+            } else response.send({message:"User updated successfully."});
         })
-      })
-      // I believe the code below is redundant so I commented it out temporarily 
-
-      // .catch(err => {
-      //   return res.status(401).json({
-      //     message: "Auth failed"
-      //   });
-      // })
-}
-
-let getAllUserDetails = (req, res) => {
-
-    UserModel.find({}, (err, result) => {
-        if (!err) {
-            res.json(result);
-        }
-    })
-
-}
-
-let test = (req, res, next) => {
-  res.status(200).json({hello: "hello"});
-}
-
-let userById = (req, res, next, id) => {
-  User.findById(id)
-      .exec((err, user) => {
-          if(err || !user){
-              return res.status(400).json({
-                  error: "user not found"
-              });
-          }
-          req.profile = user //adds profile object in req object with user info
-          next();
-      });
-}
-
-
-//Update user funds
-let updateUserFunds = (req, res) => {
-    let userId = req.body.userId;
-    let updatedFunds = req.body.updatedFunds;
-
-    UserModel.updateOne({ _id: userId }, { $set: { paymentMethods: updatedFunds } }, (err, result) => {
-        if (!err) {
-            if (result.nModified > 0) {
-                res.send("Funds updated succesfully please login back again")
-            } else {
-                res.send("Record is not available");
-            }
-        } else {
-            res.send("Error generated " + err);
-        }
-    })
-}
-
-let editUserDetails = (req, res) => {
-    let userId = req.body._id;
-    let firstName = req.body.firstName;
-    let lastName = req.body.lastName;
-    let email = req.body.email;
-    let password = req.body.password;
-    let phoneNumber = req.body.phoneNumber;
-    let shippingAddresses= req.body.addresses;
-
-    UserModel.updateOne({ _id: userId }, { $set: { firstName: firstName, lastName: lastName, email: email, password: password, phoneNumber: phoneNumber, shippingAddresses: shippingAddresses}}, (err, result) => {
-        if (!err) {
-            if (result.nModified > 0) {
-                res.send("Profile updated succesfully please login back again")
-            } else {
-                res.send("Record is not available");
-            }
-        } else {
-            res.send("Error generated " + err);
-        }
-    })
-}
-
-module.exports = { login, signup, test, getAllUserDetails, userById, updateUserFunds, editUserDetails};
+        .catch(err=> {
+            response.status(500).send({
+                message: "Error updating tutorial with id="+id
+            });
+        });
+};
