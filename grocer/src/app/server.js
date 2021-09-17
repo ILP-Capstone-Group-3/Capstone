@@ -35,6 +35,7 @@ app.get("/", (request,response)=> {
 // Add any additional database routers below
 require("./router/user.router")(app);
 require("./router/employee.router")(app);
+require("./router/orderUser.router")(app);
 
 app.listen(9090, ()=> {
     console.log("Server is running on port 9090");

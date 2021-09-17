@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../services/user.service';
+import { OrderUserService } from '../services/order-user.service';
 
+import { Order } from '../models/Order.model';
+import { OrderItem } from '../models/OrderItem.model';
+import { Product } from '../models/Product.model';
 
 
 @Component({
@@ -12,7 +16,7 @@ import { UserService } from '../services/user.service';
 })
 export class UserPanelComponent implements OnInit {
 
-  constructor(public router:Router, private userService:UserService, private route:ActivatedRoute) { }
+  constructor(public router:Router, private userService:UserService, private route:ActivatedRoute, private OrderUserService: OrderUserService) { }
 
   //Strings used for the html page
   orderTable:string="";
@@ -53,6 +57,23 @@ export class UserPanelComponent implements OnInit {
   ngOnInit(): void {
     this.orderStatus();
     this.getStartingFunds();
+  }
+
+  generateOrder(): void {
+    let dummyProduct: Product = {_id:"54353lkjlj",name:"Cake",description:"Annoying Description",price:50,quantity:1,imageUrl:""}
+    let dummyProduct2: Product = {_id:"adfasdfa342",name:"Pie",description:"Annoying Description",price:50,quantity:1,imageUrl:""}
+    let orderItem1: OrderItem = {product:dummyProduct,Quantity:5};
+    let orderItem2: OrderItem = {product:dummyProduct2,Quantity:3};
+    let newOrder1: Order = {_id:"IDVALUE03",_userId:"151893",status:"Goodbyte",date:new Date(),email:"Dummy",userName:"forget",orderItems:[orderItem1,orderItem2]};
+    let newOrder2: Order = {_id:"IDVALUE02",_userId:"151893",status:"Goodbyte",date:new Date(),email:"Dummy",userName:"forget",orderItems:[orderItem2,orderItem2]};
+    this.OrderUserService.registerOrder(newOrder1)
+      .subscribe(
+        response=> {
+          console.log(response);
+        },
+        error=> {
+          console.log(error);
+        });
   }
 
   //Helper function to check if edit profile stuff is empty or not

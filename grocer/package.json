@@ -28,6 +28,7 @@
     "http": "^0.0.1-security",
     "mongodb": "^4.1.1",
     "mongoose": "^6.0.5",
+    "mongoose-unique-validator": "^2.0.3",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
