@@ -34,7 +34,7 @@ export class AdminService {
   updateProductQuantity(quantityRef:any):any{
     return this.http.put("http://localhost:9090/admin/updateProductQuantity",quantityRef,{responseType:'text'})
   }
-  
+
   retrieveAllEmployeeRequests(): Observable<EmployeeRequests[]> {
       return this.http.get<EmployeeRequests[]>("http://localhost:9090/admin/allEmployeeRequests");
   }
@@ -44,4 +44,3 @@ export class AdminService {
   }
 
 }
-

@@ -65,8 +65,8 @@ let login = (req, res, next) => {
           token: token, fetchedAdmin: fetchedAdmin, expiresIn: 3600
         })
       })
-    // I believe the code below is redundant so I commented it out temporarily 
-    
+    // I believe the code below is redundant so I commented it out temporarily
+
     //   .catch(err => {
     //     return res.status(401).json({
     //       message: "Auth failed"
@@ -74,7 +74,7 @@ let login = (req, res, next) => {
     //   })
   }
 
-//Retrieve all admin details 
+//Retrieve all admin details
 let getAllAdminDetails = (req, res) => {
 
     AdminModel.find({}, (err, result) => {
@@ -94,8 +94,8 @@ let addEmployeeDetails = (req, res) => {
         password: req.body.password,
         firstName: req.body.firstName,
         lastName: req.body.lastName
-        
-            
+
+
     });
 
     employee.save((err, result) => {
@@ -128,14 +128,14 @@ let addProductDetails = (req, res) => {
     console.log("add in controller",req);
 
     let product = new ProductModel({
-        
+
         name: req.body.name,
         price: req.body.price,
         quantity: req.body.quantity,
 		description: req.body.description,
         imageUrl: req.body.imageUrl
-        
-            
+
+
     });
 
     product.save((err, result) => {
@@ -168,17 +168,17 @@ let deleteProductByName = (req, res) => {
 
 //Update product Details
 let updateProductPrice= (req,res)=> {
-    // console.log("update in controller",req);
+    console.log("Test");
     let productName = req.body.name;
     let updatedPrice = req.body.price;
-	
-    ProductModel.updateMany({name:productName},{$set:{price:updatedPrice}},(err,result)=> {
-        if(!err){
-            // console.log("update in controller",result);
 
+    ProductModel.updateOne({name:productName},{$set:{price:updatedPrice}},(err,result)=> {
+        if(!err){
+            console.log("requestBody", result);
             if(result.modifiedCount>0){
                     res.send("Record updated succesfully")
             }else {
+
                     res.send("Record is not available");
             }
         }else {
@@ -191,10 +191,9 @@ let updateProductQuantity= (req,res)=> {
    console.log("requestBody", req.body);
     let productName = req.body.name1;
     let updatedQuantity = req.body.quantity;
-	
+
     ProductModel.updateMany({name:productName},{$set:{quantity:updatedQuantity}},(err,result)=> {
         if(!err){
-            console.log("result", result);
             if(result.modifiedCount>0){
                     res.send("Record updated succesfully")
             }else {
@@ -253,4 +252,3 @@ let lockUserAccount = (req, res) => {
 module.exports = { login, signup, getAllAdminDetails, addEmployeeDetails, deleteEmployeeByEmail,
 				addProductDetails, deleteProductByName, updateProductPrice, getAllEmployeeRequests,
 				updateRequests, lockUserAccount, updateProductQuantity};
-

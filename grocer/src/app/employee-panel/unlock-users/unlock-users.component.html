@@ -1,0 +1,60 @@
+<mat-progress-bar mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
+<div fxLayout="column" fxLayoutGap="15px" *ngFor="let user of lockedUsers" class="parent-container">
+    <mat-card fxLayout="row" fxLayoutAlign="space-between center" class="mat-elevation-z5">
+        <div fxLayout="column" fxLayoutGap="7px">
+            <div class="mat-caption">Name</div>
+            <div class="mat-body-2">{{user.userName | titlecase}}</div>
+        </div>
+
+        <div fxLayout="column" fxLayoutGap="7px">
+            <div class="mat-caption">Email</div>
+            <div class="mat-body-2">{{user.email}}</div>
+        </div>
+
+        <div fxLayout="column" fxLayoutGap="7px">
+            <div class="mat-caption">Locked date</div>
+            <div class="mat-body-2">{{user.date | date}}</div>
+        </div>
+
+        <div fxLayout="column" fxLayoutGap="7px">
+            <div class="mat-caption">No of Attempts</div>
+            <div class="mat-body-2">{{user.numAttempts}}</div>
+        </div>
+
+        <div fxLayout="column" fxLayoutGap="7px">
+            <div class="mat-caption">Phone number</div>
+            <div class="mat-body-2">{{user.phoneNumber}}</div>
+        </div>
+
+        <!-- <div fxLayout="column" fxLayoutGap="7px">
+            <div class="mat-caption">Product description</div>
+            <div class="mat-body-2">{{product.description | titlecase}}</div>
+        </div> -->
+
+        <div fxLayout="column" fxLayoutGap="7px">
+            <div class="mat-caption">Payments methods</div>
+            <div class="mat-body-2">{{user.paymentMethods}}</div>
+        </div>
+
+        <div fxLayout="column" fxLayoutGap="7px">
+            <div class="mat-caption">Address</div>
+            <div class="mat-body-1">
+                <ul *ngFor="let address of user.shippingAddresses">
+                   <li>
+                       <div fxLayout="column">
+                           <div>{{address.Apt | titlecase}}, {{address.street}}</div>
+                           <div>{{address.city | titlecase}},</div>
+                           <div>{{address.state | titlecase}},</div>
+                           <div>Pincode- {{address.zipcode}}</div>
+                       </div>
+                   </li> 
+                </ul>
+            </div>
+        </div>
+
+
+        <div>
+            <button mat-raised-button color="primary" (click)="unlockUser(user)">Unlock User</button>
+        </div>
+    </mat-card>
+</div>

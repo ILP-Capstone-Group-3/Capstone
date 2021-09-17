@@ -1,0 +1,36 @@
+<mat-progress-bar mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
+
+<div fxLayout="column" *ngFor="let product of products" class="parent-container">
+    <mat-card fxLayout="row" fxLayoutAlign="space-between center" class="mat-elevation-z3">
+        <div fxLayout="column" fxLayoutGap="7px">
+            <div class="mat-caption">Product name</div>
+            <div class="mat-body-2">{{product.name | titlecase}}</div>
+        </div>
+
+        <div fxLayout="column" fxLayoutGap="7px">
+            <div class="mat-caption">Product price</div>
+            <div class="mat-body-2">{{product.price | currency}}</div>
+        </div>
+
+        <!-- <div fxLayout="column" fxLayoutGap="7px">
+            <div class="mat-caption">Product description</div>
+            <div class="mat-body-2">{{product.description | titlecase}}</div>
+        </div> -->
+
+        <div fxLayout="column" fxLayoutGap="7px">
+            <div class="mat-caption">Product quantity</div>
+            <div class="mat-body-2">{{product.quantity}}</div>
+        </div>
+
+        <div>
+            <mat-form-field  appearance="fill" class="request-quantity-field">
+                <mat-label>Request quantity</mat-label>
+                <input matInput [formControl]="quantityFormControl">
+            </mat-form-field>
+        </div>
+
+        <div>
+            <button mat-raised-button color="primary" (click)="sendRequest(product)">Send request</button>
+        </div>
+    </mat-card>
+</div>
