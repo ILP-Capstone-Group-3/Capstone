@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../services/user.service';
 
 
+
 @Component({
   selector: 'app-user-panel',
   templateUrl: './user-panel.component.html',
@@ -22,30 +23,15 @@ export class UserPanelComponent implements OnInit {
   userId:number=this.route.snapshot.params["id"];
 
 
+  
+  displayedColumns = ['item', 'status'];
+  dataSource: any;
+
+
   //Function used to get all the user's orders
   orderStatus(): void {
-    let tableHead = "<table><tr><th>Order ID</th><th>Order Status</th></tr>";
-    let tableRowStart = "<tr><td>";
-    let tableRowMid = "</td><td>";
-    let tableRowEnd = "</td></tr>";
-    let tableEnd = "</table>"
-    let tableContents = tableHead;
-
-    //Insert an service function that grabs the orders
-
-    //This next part might need to be done *inside* the subscribe function
-    //It essentially consists of making a table that will be shown of the statuses
-    let Orders; //May need to be defined 
-
-    //Order Id may be replaced by whatever method we use to recognize orders
-
-    // for (let order of Orders){
-    //   let newRow = tableRowStart+order._userId+tableRowMid+order.status+tableRowEnd;
-
-    //   tableContents+=newRow;
-    // }
-
-    this.orderTable=tableContents+tableEnd;
+    let order=[{item:"Cake",quantity:5,status:"Thrown off cliff"}];
+    this.dataSource=order;
   }
 
   getStartingFunds(): void{

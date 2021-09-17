@@ -28,6 +28,7 @@ import { AddProductsComponent } from "./admin/add-products/add-products.componen
 import { DeleteProductsComponent } from "./admin/delete-products/delete-products.component";
 import { UpdateProductsComponent } from "./admin/update-products/update-products.component"
 import { EmployeePanelComponent } from './employee-panel/employee-panel.component';
+import { MatTableModule } from '@angular/material/table'
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { EmployeePanelComponent } from './employee-panel/employee-panel.componen
     MatDialogModule,
     MatTabsModule,
     CommonModule,
+    MatTableModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable
