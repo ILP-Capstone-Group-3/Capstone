@@ -1,3 +1,11 @@
+.emp-panel-details {
+    background: #000000;
+    color: white;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
 h2 {
     text-align: center;
 }
@@ -22,4 +30,9 @@ form {
   
 .full-width {
     width: 72%;
+}
+
+.tabs-conatiner {
+    height: 100%;
+    overflow-y: scroll;
 }

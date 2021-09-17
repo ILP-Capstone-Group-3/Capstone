@@ -1,0 +1,16 @@
+<mat-toolbar>
+    <mat-toolbar-row>
+      <span>Order Cancel</span>
+      <span class="example-spacer"></span>
+      <button mat-icon-button (click)="close()"><mat-icon>close</mat-icon></button>
+      <button mat-icon-button (click)="close()" [disabled]="cancellationFormControl.invalid"><mat-icon>done</mat-icon></button>
+    </mat-toolbar-row>
+</mat-toolbar>
+<div fxLayout="column" fxLayoutAlign="space-between center" class="container">
+    <mat-form-field class="example-full-width" appearance="outline">
+        <textarea trim matInput placeholder="Reason for cancellation" [formControl]="cancellationFormControl"></textarea>
+        <mat-error *ngIf="cancellationFormControl.hasError('required')">
+            <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+</div>

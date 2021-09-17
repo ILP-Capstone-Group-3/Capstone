@@ -13,19 +13,19 @@ export class LoginService {
   constructor(public http: HttpClient) { }
 
   retrieveAllAdminDetails(): Observable<Array<Admin>> {
-    return this.http.get<Admin[]>("http://localhost:9090/admin/allAdminDetails");
+    return this.http.get<Admin[]>("http://localhost:8080/admin/allAdminDetails");
   }
 
   // retrieveAllUserDetails(): Observable<Array<User>> {
-  //   return this.http.get<User[]>("http://localhost:9090/user/allUserDetails");
+  //   return this.http.get<User[]>("http://localhost:8080/user/allUserDetails");
   // }
 
   // retrieveAllEmployeeDetails(): Observable<Array<Employee>> {
-  //   return this.http.get<Employee[]>("http://localhost:9090/employee/allEmployeeDetails");
+  //   return this.http.get<Employee[]>("http://localhost:8080/employee/allEmployeeDetails");
   // }
 
   // login(userName: any, password: any): Observable<User>{
-  //   return this.http.post<User>('http://localhost:9090/user/login', {userName, password});
+  //   return this.http.post<User>('http://localhost:8080/user/login', {userName, password});
   // }
 
   // saveUserToLocal(authUser: User){
@@ -39,6 +39,6 @@ export class LoginService {
   // }
 
   // lockUserAccount(loginRef: any): any {
-  //   return this.http.put("http://localhost:9090/admin/lockUserAccount", loginRef, { responseType: 'text' })
+  //   return this.http.put("http://localhost:8080/admin/lockUserAccount", loginRef, { responseType: 'text' })
   // }
 }

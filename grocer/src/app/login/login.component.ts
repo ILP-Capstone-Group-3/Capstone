@@ -15,8 +15,8 @@ export class LoginComponent implements OnInit {
   userName: any;
   password: any;
   adminDetails?: any;
-  userDetails?: any;
-  employeeDetails?: any;
+  //userDetails?: any;
+  //employeeDetails?: any;
   message: String | undefined;
   loginSuccess: Boolean = false;
   lockedUser: Boolean = false;
@@ -32,11 +32,11 @@ export class LoginComponent implements OnInit {
     let userName = loginRef.userName;
     let password = loginRef.password;
 
-    
-     
+
+
       this.loginService.retrieveAllAdminDetails().subscribe(result => {
         this.adminDetails = result;
-   //     console.log(this.adminDetails);
+      console.log(this.adminDetails);
         let keepChecking = true;
         this.adminDetails.forEach((data: { username: any; password: any; }) => {
           if (keepChecking) {
@@ -51,15 +51,16 @@ export class LoginComponent implements OnInit {
           }
         })
 
-        if (this.loginSuccess) {
-          this.router.navigate(['./adminSandbox']);
+         if (this.loginSuccess) {
+          this.router.navigate(['./adminPortal/addProducts']);
+          // this.router.navigate(['./admin/admin-portal/addProducts']);
         } else {
           this.message = "Please enter the correct details";
         }
 
       });
 
-    
+
 
     this.userName = "";
     this.password = "";
