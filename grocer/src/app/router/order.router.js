@@ -1,20 +1,31 @@
-let express = require("express");
-let router = express.Router();  //router reference. 
-let OrderController = require("../controller/order.controller.js");
+module.exports = app => {
+    // Import the order controller
+    const orders = require("../controller/order.controller");
 
-//mapping sub path with http methods.
-// router.post("/login",EmployeeController.login);
-// router.post("/signup", EmployeeController.signup);
-router.get("/retrieveOrders", OrderController.retrieveOrders);
-router.put("/updateOrders", OrderController.updateOrders);
-router.post("/postOrder", OrderController.postOrder);
-router.get("/newOrders", OrderController.retrieveNewestOrders);
-router.get("/oldOrders", OrderController.retrieveOldestOrders);
-router.get("/deliveryOrders", OrderController.retrieveDeliveryOrders);
-router.get("/deliveredOrders", OrderController.retrieveDeliveredOrders);
-router.get("/shippedOrders", OrderController.retrieveShippedOrders);
-router.get("/canceledOrders", OrderController.retrieveCanceledOrders);
-router.get("/searchOrders/:email", OrderController.searchOrders);
+    var router = require("express").Router();
 
+    // IMPORTANT: the router.post, router.get, etc. matter! You can
+    // also have multiple router actions (ex. having 2 router.post).
+    //
+    // Here is a guide on what to use:
+    // --------------------------------
+    // router.post:   Adding to the database
+    // router.get:    Retrieving data
+    // router.put:    Updating data
+    // router.delete: Deleting data
+    // --------------------------------
 
-module.exports=router;
+    router.get("/retrieveOrders", orders.retrieveOrders);
+    router.put("/updateOrder/:id", orders.updateOrder);
+    router.post("/postOrder", orders.postOrder);
+    router.get("/newOrders", orders.retrieveNewestOrders);
+    router.get("/oldOrders", orders.retrieveOldestOrders);
+    router.get("/deliveryOrders", orders.retrieveDeliveryOrders);
+    router.get("/deliveredOrders", orders.retrieveDeliveredOrders);
+    router.get("/shippedOrders", orders.retrieveShippedOrders);
+    router.get("/canceledOrders", orders.retrieveCanceledOrders);
+    router.get("/searchOrders/:email", orders.searchOrders);
+
+    // Since this is the router for users, we use /api/users
+    app.use("/api/orders", router);
+}

@@ -1,65 +1,85 @@
-let OrderModel = require("../model/order.model.js");
-const bcrypt = require("bcrypt");
+const db = require("../models");
+// This is how we access the user database
+const Order = db.orders;
 
-let retrieveOrders = (req, res, next) => {
-    OrderModel.find({}).then((fetchedOrders)=> {
-        res.status(200).json({
-            message: 'Orders fetched!',
-            orders: fetchedOrders
-          });
-    })
-}
+// Below are all exported functions to help us in database manipulation
 
-let updateOrders = (req, res, next) => {
-    console.log(req.body);
-    let updatedOrders = [];
-    req.body.forEach(order => {
-        OrderModel.findByIdAndUpdate({_id: order._id}, order, {new: true}).then((updatedOrder)=> {
-            updatedOrders.push(updatedOrder);
-        });
-    })
-    console.log(updatedOrders);
-    res.status(200).json({
-        message: 'Orders Updated!',
-        orders: updatedOrders
+// Post a new order
+exports.postOrder = (request,response)=> {
+    // First, we grab the values from the parameters and put them into a
+    // new employee object.
+    //
+    // NOTE: request.body is used for grabbing the parameters!
+    const order = new Order({
+        _id: request.body._id,
+        userId: request.body.userId,
+        date: request.body.date,
+        status: request.body.status,
+        email: request.body.email,
+        orderItems: request.body.orderItems,
     });
-}
 
-let postOrder = (req, res, next) => {
-    console.log(req.body);
-    let order = new OrderModel({
-        _userId : req.body._userId,
-        status : req.body.status,
-        date: req.body.date,
-        email : req.body.email,
-        userName : req.body.email,
-        orderItems : req.body.orderItems
+    // This portion saves the user object to the database.
+    // save is from Object.save()
+    order.save(order)
+    .then(data => {
+        response.send(data); // This just sends the data in the web console
     })
-    order.save()
-    .then(order => {
-        res.status(201).json({
-          message: 'Order created!',
-          order: order
+    .catch(err => {
+        response.status(500).send({
+            message:
+                err.message || "Some error occurred registering the user"
         });
-      })
-      .catch(err => {
-        res.status(500).json({
-          error: err
+    });
+};
+
+
+exports.retrieveOrders = (req, res, next) => {
+    Order.find({}).then((fetchedOrders)=> {
+        res.status(200).json({
+            message: 'Orders fetched!',
+            orders: fetchedOrders
+          });
+    })
+};
+
+exports.updateOrder = (req, res, next) => {
+    // Grab the "id" parameter from the URL, which looks like
+    // http://localhost:9090/api/users/id
+    //
+    // NOTE: notice how it doesn't grab the id from the angular server,
+    //       but instead grabs it from the node server! Node server port
+    //       is 9090, angular is 4200.
+    const id = req.params.id;
+
+    // findByIdAndUpdate is part of the database library
+    // request.body is the entirety of the content to modify in the database
+    Order.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+        .then(data=> {
+            if (!data) {
+                req.status(404).send({
+                    message:`Cannot update order with id=${id}. It probably doesn't exist.`
+                });
+            } else res.send({message:"Order updated successfully."});
         })
-      })
-}
+        .catch(err=> {
+            res.status(500).send({
+                message: "Error updating order with id="+id
+            });
+        });
+};
 
-let retrieveNewestOrders = (req, res, next) => {
-    OrderModel.find().sort({date: -1}).then((fetchedOrders)=> {
+exports.retrieveNewestOrders = (req, res, next) => {
+    Order.find().sort({date: -1}).then((fetchedOrders)=> {
         res.status(200).json({
             message: 'Orders fetched!',
             orders: fetchedOrders
           });
     })
-}
+};
 
-let retrieveOldestOrders = (req, res, next) => {
-    OrderModel.find().sort({created_at: -1}).then((fetchedOrders)=> {
+exports.retrieveOldestOrders = (req, res, next) => {
+    Order.find().sort({created_at: -1}).then((fetchedOrders)=> {
         console.log(fetchedOrders);
         res.status(200).json({
             message: 'Orders fetched!',
@@ -67,58 +87,55 @@ let retrieveOldestOrders = (req, res, next) => {
           });
     })
 
-}
+};
 
-let retrieveDeliveryOrders = (req, res, next) => {
-    OrderModel.find({"status" : "Out for delivery"}).then((fetchedOrders)=> {
+exports.retrieveDeliveryOrders = (req, res, next) => {
+    Order.find({"status" : "Out for delivery"}).then((fetchedOrders)=> {
         console.log(fetchedOrders);
         res.status(200).json({
             message: 'Orders fetched!',
             orders: fetchedOrders
           });
     })
-}
+};
 
-let retrieveDeliveredOrders = (req, res, next) => {
-    OrderModel.find({"status" : "Delivered"}).then((fetchedOrders)=> {
+exports.retrieveDeliveredOrders = (req, res, next) => {
+    Order.find({"status" : "Delivered"}).then((fetchedOrders)=> {
         console.log(fetchedOrders);
         res.status(200).json({
             message: 'Orders fetched!',
             orders: fetchedOrders
           });
     })
-}
+};
 
-let retrieveCanceledOrders = (req, res, next) => {
-    OrderModel.find({"status" : "Canceled"}).then((fetchedOrders)=> {
+exports.retrieveCanceledOrders = (req, res, next) => {
+    Order.find({"status" : "Canceled"}).then((fetchedOrders)=> {
         console.log(fetchedOrders);
         res.status(200).json({
             message: 'Orders fetched!',
             orders: fetchedOrders
           });
     })
-}
+};
 
-let retrieveShippedOrders = (req, res, next) => {
-    OrderModel.find({"status" : "Shipped"}).then((fetchedOrders)=> {
+exports.retrieveShippedOrders = (req, res, next) => {
+    Order.find({"status" : "Shipped"}).then((fetchedOrders)=> {
         console.log(fetchedOrders);
         res.status(200).json({
             message: 'Orders fetched!',
             orders: fetchedOrders
           });
     })
-}
+};
 
-let searchOrders = (req, res, next) => {
+exports.searchOrders = (req, res, next) => {
     console.log(req.params.email);
-    OrderModel.find({"email": req.params.email}).then((fetchedOrders)=> {
+    Order.find({"email": req.params.email}).then((fetchedOrders)=> {
         console.log(fetchedOrders);
         res.status(200).json({
             message: 'Orders fetched!',
             orders: fetchedOrders
           });
     })
-}
-
-
-module.exports = {searchOrders, retrieveOrders, updateOrders, postOrder, retrieveNewestOrders, retrieveOldestOrders, retrieveDeliveryOrders, retrieveDeliveredOrders, retrieveCanceledOrders, retrieveShippedOrders};
+};

@@ -62,6 +62,7 @@ app.use('', (req, res, next) => {
 require("./router/user.router")(app);
 require("./router/employee.router")(app);
 require("./router/reports.router")(app);
+require("./router/order.router")(app);
 
 
 // router redirects
