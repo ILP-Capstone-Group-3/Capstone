@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { EmployeeService } from '../services/employee.service';
 import { ReportService } from '../services/reports.service';
+import { AdminService } from '../admin-sandbox/admin.service';
+import { EmployeeRequests } from 'src/app/models/EmployeeRequests.model';
 
 @Component({
   selector: 'app-admin-sandbox',
@@ -11,11 +13,28 @@ import { ReportService } from '../services/reports.service';
 export class AdminSandboxComponent implements OnInit {
   // List of generated reports
   reportArray:Array<any> = [];
+  name:any;
+  price:any;
+  quantity:any;
+  description:any;
+  deletemessage:any;
+  addproductmessage:any;
+  imageUrl:any;
+  name1:any;
+  productMessage:any;
+  quantityMessage:any;
+  employeeRequests: Array<EmployeeRequests> = [];
+  updatedRequests: Array<EmployeeRequests> = [];
 
   constructor(private employeeService:EmployeeService,
-              private reportService:ReportService) { }
+              private reportService:ReportService,
+              private adminService: AdminService) { }
 
   ngOnInit(): void {
+    this.adminService.retrieveAllEmployeeRequests().subscribe(result => {
+      this.employeeRequests = result;
+      console.log(this.employeeRequests)
+    })
   }
 
   // Gets a random number from 100,000 to 999,999
@@ -157,6 +176,75 @@ export class AdminSandboxComponent implements OnInit {
 
     
     
+  }
+
+  //Add Products
+
+  addProduct(productRef: any) {
+    console.log(productRef);
+    this.adminService.storeProductDetailsInfo(productRef).subscribe(result => this.addproductmessage = result,error => this.addproductmessage = error);
+    
+    this.name = "";
+    this.price = "";
+    this.quantity = "";
+    this.description="";
+    this.imageUrl="";
+  }
+
+  // Delete Product
+
+  deleteProduct(deleteRef: any) {
+    this.adminService.deleteProductByName(deleteRef.name).subscribe((result: string) => {
+      this.deletemessage = result;
+      })
+   this.name = "";
+    }
+
+  // Update Product
+
+  updateProduct(updateRef: any) {
+    console.log("update in sandbox",updateRef);
+     this.adminService.updateProductPrice(updateRef).subscribe((result:string)=> {
+       this.productMessage=result;
+      })
+     this.name = "";
+     this.price = "";
+     
+     
+   }
+   updateQuantity(quantityRef: any){
+     console.log(quantityRef)
+    this.adminService.updateProductQuantity(quantityRef).subscribe((result:string)=> {
+       this.quantityMessage=result;
+      })
+      this.name1= "";
+     this.quantity = "";
+     
+     
+   }
+
+
+   // view request 
+
+
+
+   changeRequestStatus(status: any, employeeRequests: EmployeeRequests) {
+    // console.log(status.target.value);
+    employeeRequests.status = status.target.value;
+    this.updatedRequests.push(employeeRequests);
+  }
+
+  updateRequests() {
+    this.adminService.updateRequests(this.updatedRequests).subscribe((result) => {
+      console.log(result.message);
+      this.employeeRequests.forEach((employeeRequest: EmployeeRequests) => {
+        result.employeeRequests.forEach((updatedRequest: EmployeeRequests) => {
+          if (employeeRequest.requestid == updatedRequest.requestid)
+            employeeRequest = updatedRequest;
+        });
+      })
+      this.updatedRequests.splice(0, this.updatedRequests.length);
+    });
   }
 
 }

@@ -1,6 +1,6 @@
 
 export interface EmployeeRequests {
-  _id: string,
+  requestid: string,
   username: string,
   description: Date,
   status: string

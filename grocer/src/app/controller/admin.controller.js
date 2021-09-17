@@ -1,8 +1,8 @@
-let AdminModel = require("../model/admin.model.js");
-let EmployeeModel = require("../model/employee.model.js");
-let ProductModel = require("../model/product.model.js");
-let EmployeeRequestsModel = require("../model/employeeRequests.model.js");
-let UserModel = require("../model/user.model.js");
+let AdminModel = require("../models/admin.model.js");
+let EmployeeModel = require("../models/employee.model.js");
+let ProductModel = require("../models/product.model.js");
+let EmployeeRequestsModel = require("../models/employeeRequests.model.js");
+let UserModel = require("../models/user.model.js");
 
 const bcrypt = require("bcrypt");
 
@@ -125,6 +125,7 @@ let deleteEmployeeByEmail = (req, res) => {
 }
 	//Add new product
 let addProductDetails = (req, res) => {
+    console.log("add in controller",req);
 
     let product = new ProductModel({
         
@@ -138,10 +139,12 @@ let addProductDetails = (req, res) => {
     });
 
     product.save((err, result) => {
+        console.log(result);
         if (!err) {
             res.send("Record stored successfully ")
             //res.json({"msg":"Record stored successfully"})
         } else {
+
             res.send(err);
         }
     })
@@ -161,14 +164,19 @@ let deleteProductByName = (req, res) => {
         }
     })
 }
+
+
 //Update product Details
 let updateProductPrice= (req,res)=> {
-    let name = req.body.name;
+    // console.log("update in controller",req);
+    let productName = req.body.name;
     let updatedPrice = req.body.price;
 	
-    ProductModel.updateMany({name:name},{$set:{price:updatedPrice}},(err,result)=> {
+    ProductModel.updateMany({name:productName},{$set:{price:updatedPrice}},(err,result)=> {
         if(!err){
-            if(result.nModified>0){
+            // console.log("update in controller",result);
+
+            if(result.modifiedCount>0){
                     res.send("Record updated succesfully")
             }else {
                     res.send("Record is not available");
@@ -186,7 +194,8 @@ let updateProductQuantity= (req,res)=> {
 	
     ProductModel.updateMany({name:productName},{$set:{quantity:updatedQuantity}},(err,result)=> {
         if(!err){
-            if(result.nModified>0){
+            console.log("result", result);
+            if(result.modifiedCount>0){
                     res.send("Record updated succesfully")
             }else {
                     res.send("Record is not available");

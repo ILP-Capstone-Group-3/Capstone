@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
         })
 
         if (this.loginSuccess) {
-          this.router.navigate(['./adminPortal/addProducts']);
+          this.router.navigate(['./adminSandbox']);
         } else {
           this.message = "Please enter the correct details";
         }
