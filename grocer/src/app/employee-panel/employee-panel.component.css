@@ -31,3 +31,8 @@ form {
 .full-width {
     width: 72%;
 }
+
+.tabs-conatiner {
+    height: 100%;
+    overflow-y: scroll;
+}

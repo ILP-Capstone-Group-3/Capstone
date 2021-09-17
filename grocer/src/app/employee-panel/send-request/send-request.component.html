@@ -1,4 +1,6 @@
-<div fxLayout="column" fxLayoutGap="15px" *ngFor="let product of products">
+<mat-progress-bar mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
+
+<div fxLayout="column" *ngFor="let product of products" class="parent-container">
     <mat-card fxLayout="row" fxLayoutAlign="space-between center" class="mat-elevation-z3">
         <div fxLayout="column" fxLayoutGap="7px">
             <div class="mat-caption">Product name</div>

@@ -16,6 +16,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -99,7 +101,9 @@ import { ViewRequestsComponent } from "./admin/view-requests/view-requests.compo
     MatExpansionModule,
     MatSelectModule,
     MatDialogModule,
-    MatCardModule
+    MatCardModule,
+    MatSnackBarModule,
+    MatProgressBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

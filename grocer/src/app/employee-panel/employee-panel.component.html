@@ -31,28 +31,31 @@
         <mat-form-field>
             <mat-label>New Password</mat-label>
             <input matInput type="password" name="password" ngModel required>
-        </mat-form-field><br/>
+        </mat-form-field><br />
         <mat-form-field>
             <mat-label>Confirm New Password</mat-label>
             <input matInput type="password" name="repassword" ngModel required>
         </mat-form-field><br>
-        <button type="submit" mat-raised-button color="primary" [disabled]="updatePassRef.invalid">Update Password</button><br><br>
+        <button type="submit" mat-raised-button color="primary" [disabled]="updatePassRef.invalid">Update
+            Password</button><br><br>
         <button mat-fab color="warn" aria-label="Main Screen" routerLink="">
             <mat-icon>home</mat-icon>
-        </button><br/><br/>
-        <span style="color: red;">{{changePasswordMessage}}</span><br/>
+        </button><br /><br />
+        <span style="color: red;">{{changePasswordMessage}}</span><br />
     </form>
-    <br/><span style="color: red;">{{changePasswordMessage}}</span>
+    <br /><span style="color: red;">{{changePasswordMessage}}</span>
 </div>
 
 
 <div fxLayout="column" *ngIf="mainPageFlag">
-<!-- <div fxLayout="column"> -->
+    <!-- <div fxLayout="column"> -->
     <mat-toolbar color="primary">
         <mat-toolbar-row>
-          <span>Employee Panel</span>
-          <span class="example-spacer"></span>
-          <button mat-mini-fab (click)="employeeLogout()"><mat-icon>logout</mat-icon></button>
+            <span>Employee Panel</span>
+            <span class="example-spacer"></span>
+            <button mat-mini-fab (click)="employeeLogout()">
+                <mat-icon>logout</mat-icon>
+            </button>
         </mat-toolbar-row>
     </mat-toolbar>
     <!-- <div fxLayout="row" fxLayoutAlign="space-between center" >
@@ -61,7 +64,7 @@
         <button mat-mini-fab (click)="employeeLogout()" class="emp-panel-details"><mat-icon>logout</mat-icon></button>
     </div> -->
     <mat-divider></mat-divider>
-    <mat-tab-group>
+    <mat-tab-group class="tabs-conatiner">
         <mat-tab label="Send Request">
             <!--"Select items" function-->
             <app-send-request></app-send-request>

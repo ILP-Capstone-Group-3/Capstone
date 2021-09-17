@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Product } from 'src/app/models/Product.model';
+import { SendRequestService } from '../services/send-request.service';
 
 @Component({
   selector: 'app-send-request',
@@ -45,20 +47,43 @@ export class SendRequestComponent implements OnInit {
   ];
 
   quantityFormControl = new FormControl();
+  showProgressBar = true;
 
-  constructor() { }
+  constructor(
+    private sendRequestService: SendRequestService,
+    private snackbar: MatSnackBar
+  ) { }
 
   ngOnInit(): void {
-  }
-
-  quantityAdd(quantity: number) {
-    if(quantity > 0) {
-
-    }
+    this.sendRequestService.getProducts().subscribe((productsResponse: Product[]) => {
+      console.log("products", productsResponse);
+      this.showProgressBar = false;
+      if(productsResponse.length > 0) {
+        this.products = productsResponse;
+      }
+    })
   }
 
   sendRequest(product: Product) {
+    const updateProductQuantity = {
+      name: product.name,
+      requestToIncreaseQuantity: this.quantityFormControl.value
+    }
 
+    this.showProgressBar = true
+
+    this.sendRequestService.sendRequestToAdmin(updateProductQuantity).subscribe((response: any) => {
+      if(response) {
+        this.showProgressBar = false;
+        console.log("response", response);
+        this.quantityFormControl.reset();
+        this.snackbar.open('Request sent successfully', '', {duration: 3000});
+      }
+    }, (error: any) => {
+      this.snackbar.open('Error sending request', '', {duration: 3000});
+      this.showProgressBar = false;
+      console.log("error", error);
+    });
   }
 
 }

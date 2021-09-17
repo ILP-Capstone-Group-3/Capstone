@@ -1,4 +1,5 @@
-<div fxLayout="column" fxLayoutGap="15px" *ngFor="let user of lockedUsers">
+<mat-progress-bar mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
+<div fxLayout="column" fxLayoutGap="15px" *ngFor="let user of lockedUsers" class="parent-container">
     <mat-card fxLayout="row" fxLayoutAlign="space-between center" class="mat-elevation-z5">
         <div fxLayout="column" fxLayoutGap="7px">
             <div class="mat-caption">Name</div>
@@ -38,7 +39,7 @@
         <div fxLayout="column" fxLayoutGap="7px">
             <div class="mat-caption">Address</div>
             <div class="mat-body-1">
-                <ul *ngFor="let address of user.addresses">
+                <ul *ngFor="let address of user.shippingAddresses">
                    <li>
                        <div fxLayout="column">
                            <div>{{address.Apt | titlecase}}, {{address.street}}</div>

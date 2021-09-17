@@ -1,4 +1,5 @@
-<div fxLayout="column" fxLayoutGap="36px" *ngFor="let order of orders">
+<mat-progress-bar mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
+<div fxLayout="column" fxLayoutGap="36px" *ngFor="let order of orders" class="parent-container">
     <div>
         <mat-accordion>
             <mat-expansion-panel>
