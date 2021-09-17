@@ -40,7 +40,8 @@ export class UserLoginComponent implements OnInit {
           if (loginForm.password == curUser.password && !curUser.isLocked) {
             this.loginErrorMessage = "";
             // Navigate to the user panel page
-            this.router.navigateByUrl("/userPanel");
+            let url = "/userPanel/"+loginForm.username;
+            this.router.navigateByUrl(url);
           }
           // Account is locked
           else if (curUser.isLocked) {

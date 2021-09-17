@@ -1,18 +1,23 @@
-const mongoose = require("mongoose");
-const uniqueValidator = require("mongoose-unique-validator");
+module.exports = mongoose => {
+  var schema = mongoose.Schema(
+    {
+      _id:Number, // Auto-generated employee ID, this will be the username
+      firstname:String,
+      lastname:String,
+      email:String,
+      password:String,
+      hasDefaultPass:Boolean
+    },
+    { timestamps: false }
+  );
 
-//Unique in this case does not validate input, it is used internally by mongoose for
-//optimization purposes
-//For that we install npm install --save mongoose-unique-validator
-const employeeSchema = mongoose.Schema({
-  email: { type: String, required: true, unique: true},
-  userName: { type: String, required: true, unique: true},
-  password: { type: String, required: true},
-  firstName: { type: String, required: true},
-  lastName: { type: String, required: true}
-});
+  schema.method("toJSON", function() {
+    const { __v, _id, ...object } = this.toObject();
+    object.id = _id;
+    return object;
+  });
 
-//Unique validator does this
-employeeSchema.plugin(uniqueValidator);
-
-module.exports = mongoose.model("Employee", employeeSchema);
+  // user_accounts is the name of the database to perform operations on
+  const Employee = mongoose.model("employee_accounts", schema);
+  return Employee;
+}

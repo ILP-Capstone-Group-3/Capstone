@@ -18,6 +18,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { UserLoginComponent } from './user-login/user-login.component';
@@ -26,7 +27,10 @@ import { AdminSandboxComponent } from './admin-sandbox/admin-sandbox.component';
 import { LoginComponent } from "./login/login.component";
 import { AddProductsComponent } from "./admin/add-products/add-products.component";
 import { DeleteProductsComponent } from "./admin/delete-products/delete-products.component";
-import {UpdateProductsComponent} from "./admin/update-products/update-products.component"
+import { UpdateProductsComponent } from "./admin/update-products/update-products.component"
+import { EmployeePanelComponent } from './employee-panel/employee-panel.component';
+import { RaiseticketComponent } from './raiseticket/raiseticket.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,8 +43,9 @@ import {UpdateProductsComponent} from "./admin/update-products/update-products.c
     AddProductsComponent,
     DeleteProductsComponent,
     UpdateProductsComponent,
-    AdminSandboxComponent
-
+    AdminSandboxComponent,
+    EmployeePanelComponent,
+    RaiseticketComponent
   ],
   imports: [
     BrowserModule,
@@ -58,6 +63,7 @@ import {UpdateProductsComponent} from "./admin/update-products/update-products.c
     MatIconModule,
     MatDialogModule,
     MatTabsModule,
+    MatCardModule,
     CommonModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,

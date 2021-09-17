@@ -36,7 +36,7 @@
             <form class="form-dimensions" #delEmployeeRef="ngForm" (ngSubmit)="deleteEmployee(delEmployeeRef)">
                 <mat-form-field>
                     <mat-label>Employee ID</mat-label>
-                    <input matInput name="empid" ngModel required>
+                    <input matInput name="empid" minlength="6" ngModel required>
                 </mat-form-field>
                 <br>
                 <button type="submit" mat-raised-button color="primary" [disabled]="delEmployeeRef.invalid">Delete</button>
@@ -48,7 +48,7 @@
             <form class="form-dimensions" #reportRef="ngForm" (ngSubmit)="generateReports(reportRef)">
                 <mat-form-field>
                     <mat-label>Time</mat-label>
-                    <select matNativeControl ngModel required>
+                    <select matNativeControl name="reporttype" ngModel required>
                         <option value="daily">Daily</option>
                         <option value="weekly">Weekly</option>
                         <option value="monthly">Monthly</option>
@@ -57,18 +57,38 @@
                 &nbsp;
                 <mat-form-field>
                     <mat-label>User ID</mat-label>
-                    <input matInput name="userId">
+                    <input matInput name="userId" ngModel>
                 </mat-form-field>
                 &nbsp;
                 <mat-form-field>
                     <mat-label>Product Name</mat-label>
-                    <input matInput name="productId">
+                    <input matInput name="productId" ngModel>
                 </mat-form-field>
                 <br>
                 <button type="submit" mat-raised-button color="primary" [disabled]="reportRef.invalid">Generate</button>
             </form>
             <br>
             <hr>
+            <!--Generation results go here-->
+            <div>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Product Name</th>
+                            <th>Date of Purchase</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let report of reportArray">
+                            <td>{{report.userid}}</td>
+                            <td>{{report.product}}</td>
+                            <td>{{report.month+1}}-{{report.day}}-{{report.year}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
         </mat-tab>
     </mat-tab-group>
 </div>

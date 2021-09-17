@@ -50,6 +50,7 @@ export class RegisterNormalUserComponent implements OnInit {
     }
     // Registration success
     else { 
+      // Generate a new user id
       let userId = this.genRandomId();
       this.registrationMessage = "";
 

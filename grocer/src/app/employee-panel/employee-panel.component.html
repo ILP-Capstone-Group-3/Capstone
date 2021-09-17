@@ -1,0 +1,68 @@
+<div *ngIf="signInFlag">
+    <h1>Grocery HUB</h1>
+    <form class="form-dimensions" #loginRef="ngForm" (ngSubmit)="checkEmployee(loginRef)">
+        <h1>Employee Login</h1>
+        <mat-form-field>
+            <mat-label>Employee ID</mat-label>
+            <input matInput name="username" ngModel required>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput type="password" name="password" ngModel required>
+        </mat-form-field>
+        <br>
+        <button type="submit" mat-raised-button color="primary" [disabled]="loginRef.invalid">Login</button>
+        <br><br>
+        <button mat-fab color="warn" aria-label="Main Screen" routerLink="">
+            <mat-icon>home</mat-icon>
+        </button><br/><br/>
+        <span style="color: red;">{{loginMessage}}</span>
+        <br/>
+    </form>
+
+</div>
+
+
+<div *ngIf="firstLoginFlag">
+    <h1>Grocery HUB</h1>
+    <form class="form-dimensions" #updatePassRef="ngForm" (ngSubmit)="updateFirstPassword(updatePassRef)">
+        <h1>Please Update Password (First Time Login)</h1>
+        <mat-form-field>
+            <mat-label>New Password</mat-label>
+            <input matInput type="password" name="password" ngModel required>
+        </mat-form-field><br/>
+        <mat-form-field>
+            <mat-label>Confirm New Password</mat-label>
+            <input matInput type="password" name="repassword" ngModel required>
+        </mat-form-field><br>
+        <button type="submit" mat-raised-button color="primary" [disabled]="updatePassRef.invalid">Update Password</button><br><br>
+        <button mat-fab color="warn" aria-label="Main Screen" routerLink="">
+            <mat-icon>home</mat-icon>
+        </button><br/><br/>
+        <span style="color: red;">{{changePasswordMessage}}</span><br/>
+    </form>
+</div>
+
+
+<div *ngIf="mainPageFlag">
+    <h1>Employee Panel</h1>
+    <button mat-raised-button color="primary" style="margin-bottom: 10px;" (click)="employeeLogout()">Logout</button>
+    <mat-tab-group style="text-align: center;">
+        <mat-tab label="Send Request">
+            <!--"Select items" function-->
+        </mat-tab>
+        <mat-tab label="Update Order Status">
+            <!--Order functions-->
+            
+        </mat-tab>
+        <mat-tab label="Unlock Users">
+            <!--Edit profile functions-->
+            
+        </mat-tab>
+        <mat-tab label="Edit Profile">
+            <!--Funding functions-->
+            
+        </mat-tab>
+    </mat-tab-group>
+</div>
