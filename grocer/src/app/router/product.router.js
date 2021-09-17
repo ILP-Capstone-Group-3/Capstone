@@ -1,6 +1,6 @@
 module.exports = app => {
     // Import the order controller
-    const orders = require("../controller/product.controller");
+    const products = require("../controller/product.controller");
 
     var router = require("express").Router();
 
@@ -15,12 +15,9 @@ module.exports = app => {
     // router.delete: Deleting data
     // --------------------------------
 
-    // Create a new employee
-    // The first parameter is a url used in the node server
-    // The second parameter is the function to use from the controller
-    router.post("/", orders.getProducts);
+    router.post("/save", products.save);
 
-    router.get("/products", ProductController.getProducts);
+    router.get('/products', products.getProducts);
 
     // Since this is the router for users, we use /api/users
     app.use("/api/products", router);

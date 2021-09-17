@@ -37,6 +37,7 @@ require("./router/user.router")(app);
 require("./router/employee.router")(app);
 require("./router/reports.router")(app);
 require("./router/order.router")(app);
+require("./router/product.router")(app);
 
 app.listen(9090, ()=> {
     console.log("Server is running on port 9090");
