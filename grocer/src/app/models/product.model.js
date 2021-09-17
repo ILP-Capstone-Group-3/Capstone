@@ -1,11 +1,22 @@
-const mongoose = require('mongoose');
+module.exports = mongoose => {
+  var schema = mongoose.Schema(
+    {
+      _id:Number,
+      name:String,
+      price:Number,
+      imageUrl:String,
+      quantity:Number,
+      description:String
+    }
+  );
 
-const productSchema = mongoose.Schema({
-  name: { type: String, required: true},
-  price: {type: Number, required: true},
-  imageUrl: {type: String, required: true},
-  quantity: {type:Number, required:true},
-  description: {type: String, required: true}
-});
+  schema.method("toJSON", function() {
+    const { __v, _id, ...object } = this.toObject();
+    object.id = _id;
+    return object;
+  });
 
-module.exports = mongoose.model('Product', productSchema);
+  // reports is the name of the database to perform operations on
+  const Product = mongoose.model("products", schema);
+  return Product;
+}

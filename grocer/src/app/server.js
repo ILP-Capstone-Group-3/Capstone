@@ -63,6 +63,7 @@ require("./router/user.router")(app);
 require("./router/employee.router")(app);
 require("./router/reports.router")(app);
 require("./router/order.router")(app);
+require("./router/product.router")(app);
 
 
 // router redirects

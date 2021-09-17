@@ -1,27 +1,31 @@
-let ProductModel = require("../models/product.model.js");
+const db = require("../models");
+const Product = db.products;
 
-let save = (req, res, next) => {
-    const product = new ProductModel({
+exports.save = (req, res, next) => {
+    const product = new Product({
+        _id: req.body._id,
         name: req.body.name,
         price: req.body.price,
         description: req.body.description,
-        imageUrl: req.body.imageUrl
+        imageUrl: req.body.imageUrl,
+        quantity: req.body.quantity
     });
-    console.log(product);
-    product.save();
-    res.status(201).json({
-        message: 'Product added successfully' + product
-    });
-}
 
-let getProducts = (req, res, next) =>{
-    ProductModel.find()
-        .then(results =>{
-            return res.json({products: results});
+    product.save(product)
+    .then(data => {
+        response.send(data); // This just sends the data in the web console
+    })
+    .catch(err => {
+        response.status(500).send({
+            message:
+                err.message || "Some error occurred registering the user"
         });
-}
+    });
+};
 
-module.exports={
-    save,
-    getProducts
+exports.getProducts = (req, res, next) => {
+    Product.find()
+    .then(results =>{
+        return res.json({products: results});
+    });
 };
