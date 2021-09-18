@@ -48,6 +48,32 @@ exports.findOne = (request, response)=> {
     });
 };
 
+exports.updateOne = (request, response)=> {
+    // Grab the "id" parameter from the URL, which looks like
+    // http://localhost:9090/api/users/id
+    //
+    // NOTE: notice how it doesn't grab the id from the angular server,
+    //       but instead grabs it from the node server! Node server port 
+    //       is 9090, angular is 4200.
+    const id = request.params.id;
+
+    // findByIdAndUpdate is part of the database library
+    // request.body is the entirety of the content to modify in the database
+    Employee.findByIdAndUpdate(id, request.body, { useFindAndModify: false })
+        .then(data=> {
+            if (!data) {
+                request.status(404).send({
+                    message:`Cannot update employee with id=${id}. It probably doesn't exist.`
+                });
+            } else response.send({message:"Employee updated successfully."});
+        })
+        .catch(err=> {
+            response.status(500).send({
+                message: "Error updating employee with id="+id
+            });
+        });
+};
+
 // Delete an employee based on id
 exports.deleteOne = (request, response)=> {
     const id = request.params.id;

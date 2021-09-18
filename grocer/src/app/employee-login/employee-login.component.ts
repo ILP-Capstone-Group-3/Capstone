@@ -88,8 +88,11 @@ export class EmployeeLoginComponent implements OnInit {
         curEmployee.hasDefaultPass=false;
         this.employeeService.updateEmployee(this.employeeId,curEmployee).subscribe(response=>{
           this.firstLoginFlag=false;
-          this.mainPageFlag=true;
+          //this.mainPageFlag=true;
           this.changePasswordMessage="";
+          // Navigate to the employee panel page
+          let url = "/employeePanel/"+this.employeeId;
+          this.router.navigateByUrl(url);
         },
         error=>{
           console.log(error);

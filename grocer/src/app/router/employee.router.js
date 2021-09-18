@@ -23,6 +23,9 @@ module.exports = app => {
     // Get employee by id
     router.get("/:id", employees.findOne);
 
+    // Update an employee
+    router.put("/:id", employees.updateOne);
+
     // Delete an employee by id
     router.delete("/:id", employees.deleteOne);
 
