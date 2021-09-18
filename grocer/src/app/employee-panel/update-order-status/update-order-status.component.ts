@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Order } from 'src/app/models/Order.model';
+import { Order } from 'src/app/order.model';
 import { OrderCancelComponent } from '../order-cancel/order-cancel.component';
 import { UpdateOrderStatusService } from '../services/update-order-status.service';
 
@@ -13,7 +13,10 @@ export class UpdateOrderStatusComponent implements OnInit {
 
   orderStatus = ["Shipped", "Out for delivery", "Delivered", "Cancelled"];
 
-  orders: Order[] = [
+  orders: Order[] = [];
+
+  // Make this array compatable with the actual orders table
+  /*orders: Order[] = [
     {
       _id: "813yhenjidkwshd1",
       _userId: "uiashddsa",
@@ -69,8 +72,8 @@ export class UpdateOrderStatusComponent implements OnInit {
       userName: "Max"
     },
     {
-      _id: "8132179eghuijsdyhenjidkwshd1",
-      _userId: "uhodasuiashddsa",
+      _id: 2,
+      userId: 192991,
       date: new Date(),
       email: "user2@gmail.com",
       orderItems: [
@@ -339,6 +342,7 @@ export class UpdateOrderStatusComponent implements OnInit {
       userName: "Sheldon"
     }
   ];
+  */
 
   showProgressBar = true;
 

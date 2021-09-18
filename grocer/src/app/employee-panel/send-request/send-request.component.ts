@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Product } from 'src/app/models/Product.model';
+import { Product } from 'src/app/product.model';
 import { SendRequestService } from '../services/send-request.service';
 
 @Component({
@@ -10,8 +10,11 @@ import { SendRequestService } from '../services/send-request.service';
   styleUrls: ['./send-request.component.css']
 })
 export class SendRequestComponent implements OnInit {
+  
+  products: Product[] = [];
 
-  products: Product[] = [
+  // TODO: fix this
+  /*products: Product[] = [
     {
       _id: "bhdjk1b213",
       description: "sample",
@@ -45,6 +48,7 @@ export class SendRequestComponent implements OnInit {
       quantity: 500
     }
   ];
+  */
 
   quantityFormControl = new FormControl();
   showProgressBar = true;

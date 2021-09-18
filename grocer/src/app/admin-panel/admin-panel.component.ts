@@ -2,15 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { EmployeeService } from '../services/employee.service';
 import { ReportService } from '../services/reports.service';
-import { AdminService } from '../admin-panel/admin.service';
+import { AdminService } from './admin.service';
 import { EmployeeRequests } from 'src/app/models/EmployeeRequests.model';
 
 @Component({
-  selector: 'app-admin-sandbox',
-  templateUrl: './admin-sandbox.component.html',
-  styleUrls: ['./admin-sandbox.component.css']
+  selector: 'app-admin-panel',
+  templateUrl: './admin-panel.component.html',
+  styleUrls: ['./admin-panel.component.css']
 })
-export class AdminSandboxComponent implements OnInit {
+export class AdminPanelComponent implements OnInit {
   // List of generated reports
   reportArray:Array<any> = [];
   name:any;
@@ -211,8 +211,10 @@ export class AdminSandboxComponent implements OnInit {
      this.price = "";
      
      
-   }
-   updateQuantity(quantityRef: any){
+  }
+
+
+  updateQuantity(quantityRef: any){
      console.log(quantityRef)
     this.adminService.updateProductQuantity(quantityRef).subscribe((result:string)=> {
        this.quantityMessage=result;
@@ -228,7 +230,7 @@ export class AdminSandboxComponent implements OnInit {
 
 
 
-   changeRequestStatus(status: any, employeeRequests: EmployeeRequests) {
+  changeRequestStatus(status: any, employeeRequests: EmployeeRequests) {
     // console.log(status.target.value);
     employeeRequests.status = status.target.value;
     this.updatedRequests.push(employeeRequests);
@@ -239,8 +241,9 @@ export class AdminSandboxComponent implements OnInit {
       console.log(result.message);
       this.employeeRequests.forEach((employeeRequest: EmployeeRequests) => {
         result.employeeRequests.forEach((updatedRequest: EmployeeRequests) => {
-          if (employeeRequest.requestid == updatedRequest.requestid)
-            employeeRequest = updatedRequest;
+          // TODO: Fix this
+          //if (employeeRequest.requestid == updatedRequest.requestid)
+            //employeeRequest = updatedRequest;
         });
       })
       this.updatedRequests.splice(0, this.updatedRequests.length);

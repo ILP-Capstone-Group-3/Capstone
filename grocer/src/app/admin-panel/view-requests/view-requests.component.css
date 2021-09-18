@@ -1,0 +1,145 @@
+
+
+table {
+  height: calc(100% - 77px);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#foot {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: seashell;
+  border-top: 3px solid black;
+  margin: 0;
+  height: inherit;
+}
+/* Style the search field */
+form.example input[type=text] {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  float: left;
+  width: 80%;
+  background: #f1f1f1;
+}
+
+/* Style the submit button */
+form.example button {
+  float: left;
+  width: 20%;
+  padding: 10px;
+  background: #2196F3;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none; /* Prevent double borders */
+  cursor: pointer;
+}
+
+  form.example button:hover {
+    background: #0b7dda;
+  }
+
+/* Clear floats */
+form.example::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+
+.dropup-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  bottom: 50px;
+}
+
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+  width: 100%;
+}
+
+.dropup-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropup-content a:hover {
+  background-color: #ddd;
+}
+
+
+.dropdown:hover .dropdown-content {
+  display: block;
+  max-height: 200px;
+  height: fit-content;
+  overflow-y: auto;
+}
+
+.dropdown:hover .dropup-content {
+  display: block;
+  max-height: 200px;
+  height: fit-content;
+  overflow-y: auto;
+}
+
+
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
+}
+
+
+@media only screen and (max-width: 1140px) {
+  .dropdown-content {
+    right: 0;
+  }
+
+  .dropup-content {
+    right: 0;
+  }
+}

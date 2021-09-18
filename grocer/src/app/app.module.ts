@@ -23,15 +23,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { AdminSandboxComponent } from './admin-sandbox/admin-sandbox.component';
-import { AddProductsComponent } from "./admin/add-products/add-products.component";
 // import { AddProductsComponent } from './admin/add-products/add-products.component';
 // import { AdminPortalComponent } from './admin/admin-portal/admin-portal.component';
 // import { DeleteProductsComponent } from './admin/delete-products/delete-products.component';
 // import { UpdateProductsComponent } from './admin/update-products/update-products.component';
 // import { LoginComponent } from './login/login.component';
 import { AdminPortalComponent } from "./admin/admin-portal/admin-portal.component";
-import { DeleteProductsComponent } from "./admin/delete-products/delete-products.component";
-import { UpdateProductsComponent } from "./admin/update-products/update-products.component";
+//import { DeleteProductsComponent } from "./admin/delete-products/delete-products.component";
+//import { UpdateProductsComponent } from "./admin/update-products/update-products.component";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EditProfileComponent } from './employee-panel/edit-profile/edit-profile.component';
@@ -45,7 +44,9 @@ import { LoginComponent } from "./login/login.component";
 import { RegisterNormalUserComponent } from './register-normal-user/register-normal-user.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { UserPanelComponent } from './user-panel/user-panel.component';
-import { ViewRequestsComponent } from "./admin/view-requests/view-requests.component";
+import { AdminLoginComponent } from './admin-login/admin-login.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { EmployeeLoginComponent } from './employee-login/employee-login.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,16 +58,15 @@ import { ViewRequestsComponent } from "./admin/view-requests/view-requests.compo
     UpdateOrderStatusComponent,
     AdminPortalComponent,
     LoginComponent,
-    AddProductsComponent,
-    DeleteProductsComponent,
-    UpdateProductsComponent,
     OrderCancelComponent,
     SendRequestComponent,
     UnlockUsersComponent,
     EditProfileComponent,
     AdminSandboxComponent,
     EmployeePanelComponent,
-    ViewRequestsComponent
+    AdminLoginComponent,
+    AdminPanelComponent,
+    EmployeeLoginComponent
 
   ],
   imports: [

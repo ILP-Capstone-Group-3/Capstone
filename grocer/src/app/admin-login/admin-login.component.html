@@ -1,0 +1,24 @@
+<div>
+    <h1>Grocery HUB</h1>
+    <form class="form-dimensions" #loginRef="ngForm" (ngSubmit)="checkUser(loginRef)">
+        <h1>Admin Login</h1>
+        <mat-form-field>
+            <mat-label>Username</mat-label>
+            <input matInput name="username" ngModel required>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput type="password" name="password" ngModel required>
+        </mat-form-field>
+        <br>
+        <button type="submit" mat-raised-button color="primary" [disabled]="loginRef.invalid">Login</button>
+        <br><br>
+        <p style="color: red;">{{loginErrorMessage}}</p>
+        <br><br>
+        <button mat-fab color="warn" aria-label="Main Screen" routerLink="">
+            <mat-icon>home</mat-icon>
+        </button>
+    </form>
+    <br>
+</div>
