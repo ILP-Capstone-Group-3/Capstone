@@ -1,9 +1,10 @@
+import { Product } from "./product.model";
 
 export interface Order {
-    _id:Number;
-    userId:Number;
+    _id:number;
+    userId:number;
     date:Date;
-    status:String;
-    email:String;
-    orderItems:Array<any>;
+    status:string;
+    email:string;
+    orderItems:Array<Product>;
 }

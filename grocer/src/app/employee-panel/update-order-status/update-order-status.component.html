@@ -1,5 +1,5 @@
 <mat-progress-bar mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
-<div fxLayout="column" fxLayoutGap="36px" *ngFor="let order of orders" class="parent-container">
+<div fxLayout="column" fxLayoutGap="36px" *ngFor="let order of orders;let i=index" class="parent-container">
     <div>
         <mat-accordion>
             <mat-expansion-panel>
@@ -35,21 +35,21 @@
                     </div>
                 </div>
               </mat-expansion-panel-header>
-              <div fxLayout="column" fxLayoutGap="7px" class="order-details" *ngFor="let orderItems of order.orderItems">
+              <div fxLayout="column" fxLayoutGap="7px" class="order-details" *ngFor="let product of order.orderItems">
                   <div fxLayout="row" fxLayoutAlign="space-evenly center">
                       <div fxLayout="column">
                           <div class="mat-caption">Product name</div>
-                          <div class="mat-body-2">{{orderItems.product.name | titlecase}}</div>
+                          <div class="mat-body-2">{{product.name | titlecase}}</div>
                       </div>
 
                       <div fxLayout="column">
                         <div class="mat-caption">Product Price</div>
-                        <div class="mat-body-2">{{orderItems.product.price | currency}}</div>
+                        <div class="mat-body-2">{{product.price | currency}}</div>
                       </div>
 
                       <div fxLayout="column">
                         <div class="mat-caption">Quantity</div>
-                        <div class="mat-body-2">{{orderItems.product.quantity}}</div>
+                        <div class="mat-body-2">{{product.quantity}}</div>
                       </div>
                   </div>
               </div>

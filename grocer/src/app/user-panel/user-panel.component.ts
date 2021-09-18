@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../services/user.service';
+import { OrderService } from '../services/order.service';
+import { Order } from '../order.model';
 
 
 @Component({
@@ -11,7 +13,7 @@ import { UserService } from '../services/user.service';
 })
 export class UserPanelComponent implements OnInit {
 
-  constructor(public router:Router, private userService:UserService, private route:ActivatedRoute) { }
+  constructor(public router:Router, private userService:UserService, private orderService:OrderService, private route:ActivatedRoute) { }
 
   //Strings used for the html page
   orderTable:string="";
@@ -21,31 +23,40 @@ export class UserPanelComponent implements OnInit {
 
   userId:number=this.route.snapshot.params["id"];
 
+  displayedColumns = ['item', 'status'];
+  dataSource: Array<Order> = [];
+
 
   //Function used to get all the user's orders
   orderStatus(): void {
-    let tableHead = "<table><tr><th>Order ID</th><th>Order Status</th></tr>";
-    let tableRowStart = "<tr><td>";
-    let tableRowMid = "</td><td>";
-    let tableRowEnd = "</td></tr>";
-    let tableEnd = "</table>"
-    let tableContents = tableHead;
+    this.userService.getUserFromId(this.userId).subscribe(data=>{
+      let userEmail = data.email;
 
-    //Insert an service function that grabs the orders
+      //Orders are converted into this format, with quanity + item name, followed by status
+      let orders:Array<Order> = [];
+      let order;
 
-    //This next part might need to be done *inside* the subscribe function
-    //It essentially consists of making a table that will be shown of the statuses
-    let Orders; //May need to be defined 
+      //Variables used for this.
+      let orderItemsString: string;
+      let orderStatus: string;
+      let orderItemList;
 
-    //Order Id may be replaced by whatever method we use to recognize orders
+      // Orders contain details about a purchase, along with an
+      // array of products.
+      this.orderService.retrieveFromEmail(userEmail).subscribe(data=> {
+        // For loop for looking at each order
+        data.forEach(element=> {
+          // For loop for looking at each product in the order
+          element.orderItems.forEach(item=> {
 
-    // for (let order of Orders){
-    //   let newRow = tableRowStart+order._userId+tableRowMid+order.status+tableRowEnd;
-
-    //   tableContents+=newRow;
-    // }
-
-    this.orderTable=tableContents+tableEnd;
+          });
+        });
+        this.dataSource=orders;
+      })
+    },
+    error=>{
+      console.log(error);
+    })
   }
 
   getStartingFunds(): void{

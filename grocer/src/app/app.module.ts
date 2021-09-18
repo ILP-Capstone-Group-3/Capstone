@@ -15,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -28,7 +29,7 @@ import { AdminSandboxComponent } from './admin-sandbox/admin-sandbox.component';
 // import { DeleteProductsComponent } from './admin/delete-products/delete-products.component';
 // import { UpdateProductsComponent } from './admin/update-products/update-products.component';
 // import { LoginComponent } from './login/login.component';
-import { AdminPortalComponent } from "./admin/admin-portal/admin-portal.component";
+//import { AdminPortalComponent } from "./admin/admin-portal/admin-portal.component";
 //import { DeleteProductsComponent } from "./admin/delete-products/delete-products.component";
 //import { UpdateProductsComponent } from "./admin/update-products/update-products.component";
 import { AppRoutingModule } from './app-routing.module';
@@ -56,7 +57,6 @@ import { EmployeeLoginComponent } from './employee-login/employee-login.componen
     UserLoginComponent,
     EmployeePanelComponent,
     UpdateOrderStatusComponent,
-    AdminPortalComponent,
     LoginComponent,
     OrderCancelComponent,
     SendRequestComponent,
@@ -84,6 +84,7 @@ import { EmployeeLoginComponent } from './employee-login/employee-login.componen
     MatDatepickerModule,
     MatSelectModule,
     MatIconModule,
+    MatTableModule,
     MatDialogModule,
     MatTabsModule,
     MatCardModule,
