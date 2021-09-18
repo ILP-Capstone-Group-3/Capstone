@@ -4,50 +4,38 @@ mongoose.pluralize(null); //to avoid creating in lower case with s postfix.
 
 let ticketSchema = mongoose.Schema({
 
-
-     name: {
+    ticketid: {
         type: String
-     },
-     subject : {
-         type: String
-     },
-     issue :{
-         type: String
-     }
-
-
-    // ticketid: {
-    //     type: String
-    // },
-    // username: {
-    //     type: String
-    // },
-    // email: {
-    //     type: String
-    // },
-    // title: {
-    //     type: String
-    // },
-    // description: {
-    //     type: String
-    // },
-    // status: {
-    //     type: String,
-    //     default: "open"
-    // },
+    },
+    username: {
+        type: String
+    },
+    email: {
+        type: String
+    },
+    title: {
+        type: String
+    },
+    description: {
+        type: String
+    },
+    status: {
+        type: String,
+        default: "open"
+    },
    
-    // messages: [{
-    //     sender: {
-    //         type: String
-    //     },
-    //     message: {
-    //         type: String
-    //     },
-    //     created: {
-    //         type: Date,
-    //         default: Date.now
-    //     },
-    // }],
+    messages: [{
+        sender: {
+            type: String
+        },
+        message: {
+            type: String
+        },
+        created: {
+            type: Date,
+            default: Date.now
+        },
+    }],
     
     
 });

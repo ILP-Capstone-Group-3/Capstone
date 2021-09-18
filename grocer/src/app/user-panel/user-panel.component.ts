@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../services/user.service';
+import { ApiService } from '../api.service'; 
+import { CartService } from '../cart.service';
 
 
 @Component({
@@ -10,8 +12,19 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./user-panel.component.css']
 })
 export class UserPanelComponent implements OnInit {
+  public productList : any ;
+  public filterCategory : any
+  searchKey:string ="";
 
-  constructor(public router:Router, private userService:UserService, private route:ActivatedRoute) { }
+// **********
+  public products : any = [];
+  public grandTotal !: number;
+
+  public totalItem : number = 0;
+  public searchTerm !: string;
+// ****
+
+  constructor(public router:Router, private userService:UserService, private route:ActivatedRoute, private api : ApiService, private cartService : CartService) { }
 
   //Strings used for the html page
   orderTable:string="";
@@ -67,8 +80,54 @@ export class UserPanelComponent implements OnInit {
   ngOnInit(): void {
     this.orderStatus();
     this.getStartingFunds();
+
+    this.api.getProduct()
+    .subscribe(res=>{
+      this.productList = res;
+      this.filterCategory = res;
+      this.productList.forEach((a:any) => {
+        if(a.category ==="women's clothing" || a.category ==="men's clothing"){
+          a.category ="fashion"
+        }
+        Object.assign(a,{quantity:1,total:a.price});
+      });
+      console.log(this.productList)
+    });
+
+    this.cartService.search.subscribe((val:any)=>{
+      this.searchKey = val;
+    })
+
+// ***********
+ this.cartService.getProducts()
+    .subscribe(res=>{
+      this.products = res;
+       this.grandTotal = this.cartService.getTotalPrice();
+   })
+  
+//   removeItem(item: any){
+//     this.cartService.removeCartItem(item);
+//   }
+//   emptycart(){
+//     this.cartService.removeAllCart();
+//   }
+
+// ***********
+
+
   }
 
+  addtocart(item: any){
+    this.cartService.addtoCart(item);
+  }
+  filter(category:string){
+    this.filterCategory = this.productList
+    .filter((a:any)=>{
+      if(a.category == category || category==''){
+        return a;
+      }
+    })
+  }
   //Helper function to check if edit profile stuff is empty or not
   checkIfEmpty(newProfileStuff:any): boolean {
     if(newProfileStuff=="" || newProfileStuff==null) return true;
@@ -156,5 +215,30 @@ export class UserPanelComponent implements OnInit {
       this.fundsErrorMessage="Funds failed to be updated."
     })
   }
+
+
+
+
+
+
+
+// ***************************
+
+ 
+search(event:any){
+  this.searchTerm = (event.target as HTMLInputElement).value;
+  console.log(this.searchTerm);
+  this.cartService.search.next(this.searchTerm);
+} 
+ 
+removeItem(item: any){
+  this.cartService.removeCartItem(item);
+}
+
+emptycart(){
+  this.cartService.removeAllCart();
+}
+
+//*************** */
 
 }

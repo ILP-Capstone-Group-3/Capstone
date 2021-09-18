@@ -12,7 +12,7 @@ export class RaiseTicketService {
   constructor(public http:HttpClient) { }
 
   raiseTicketLog(raiseticket: RaiseTicket): Observable<any>{
-    return this.http.post("http://localhost:9090/api/ticket/createNewTicket", raiseticket,
+    return this.http.post("http://localhost:9090/api/user/SignUp", raiseticket,
     {responseType:'text'})
 
   }

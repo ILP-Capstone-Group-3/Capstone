@@ -10,15 +10,14 @@ import { RaiseTicketService } from '../raise-ticket.service';
   styleUrls: ['./raise-ticket.component.css']
 })
 export class RaiseTicketComponent implements OnInit {
-  ticketRef = new FormGroup({
-    name:new FormControl(),
-    subject:new FormControl(),
-    issue: new FormControl()
+  raiseTicketRef = new FormGroup({
+    email:new FormControl(),
+    password: new FormControl()
   })
 
 
   constructor(
-    public ticketSer:RaiseTicketService,
+    public loginSer:RaiseTicketService,
     public router:Router) { }
     msg?: string;
 
@@ -26,13 +25,13 @@ export class RaiseTicketComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  submitTicket(){
-    let raiseTicket = this.ticketRef.value;
+  checkUser(){
+    let login = this.raiseTicketRef.value;
     //console.log(login)
-    this.ticketSer.raiseTicketLog(raiseTicket).
+    this.loginSer.raiseTicketLog(login).
     subscribe(result=>{
-      if(result=="Account created successfully"){
-        this.router.navigate(["home", raiseTicket.name])
+      if(result=="Success"){
+        this.router.navigate(["home", login.email])
       }else{
           this.msg = result;
       }
@@ -40,7 +39,7 @@ export class RaiseTicketComponent implements OnInit {
      },
     error=>console.log(error))
 
-    this.ticketRef.reset();
+    this.raiseTicketRef.reset();
   }
 
 

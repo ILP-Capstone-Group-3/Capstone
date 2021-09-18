@@ -30,6 +30,10 @@ import { DeleteProductsComponent } from "./admin/delete-products/delete-products
 import { UpdateProductsComponent } from "./admin/update-products/update-products.component"
 import { EmployeePanelComponent } from './employee-panel/employee-panel.component';
 import { RaiseticketComponent } from './raiseticket/raiseticket.component';
+import { CartComponent } from './cart/cart.component';
+import { HeaderComponent } from './header/header.component';
+import { ProductComponent } from './product/product.component';
+
 
 @NgModule({
   declarations: [
@@ -45,7 +49,10 @@ import { RaiseticketComponent } from './raiseticket/raiseticket.component';
     UpdateProductsComponent,
     AdminSandboxComponent,
     EmployeePanelComponent,
-    RaiseticketComponent
+    RaiseticketComponent,
+    CartComponent,
+    HeaderComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,

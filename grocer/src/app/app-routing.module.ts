@@ -7,6 +7,7 @@ import { UserLoginComponent } from './user-login/user-login.component';
 import { EmployeePanelComponent } from './employee-panel/employee-panel.component';
 import { AdminSandboxComponent } from './admin-sandbox/admin-sandbox.component';
 import { RaiseticketComponent } from './raiseticket/raiseticket.component';
+import { CartComponent } from './cart/cart.component';
 
 const routes: Routes = [
   {path:"userLogin",component:UserLoginComponent},
@@ -16,7 +17,8 @@ const routes: Routes = [
   {path:"employeePanel",component:EmployeePanelComponent},
   {path:"adminSandbox",component:AdminSandboxComponent},
   {path:"",component:FirstPageComponent},
-  {path:"raiseTicket", component:RaiseticketComponent}
+  {path:"raiseTicket", component:RaiseticketComponent},
+  {path:'cart', component: CartComponent}
 ];
 
 @NgModule({
