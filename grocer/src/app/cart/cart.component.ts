@@ -29,4 +29,10 @@ export class CartComponent implements OnInit {
     this.cartService.removeAllCart();
   }
 
+  addToCart(products: any) {
+    this.cartService.addtoCart(products);
+    window.alert('Order placed successfully!');
+  }
 }
+
+
