@@ -1,19 +1,22 @@
 <mat-progress-bar mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
 
-<div>
-    <form class="form-dimensions" #requestRef="ngForm" (ngSubmit)="sendRequest(requestRef)">
-        <h1>Create Support Ticket</h1>
-        <mat-form-field>
-            <mat-label>Product Name</mat-label>
-            <input matInput name="productname" ngModel required>
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-            <mat-label>Amount Needed</mat-label>
-            <input matInput name="amount" ngModel required>
-        </mat-form-field>
-        <br>
-        <button type="submit" mat-raised-button color="primary" [disabled]="requestRef.invalid">Submit</button>
+<div fxLayout="column" fxLayoutAlign="center center" class="edit-profile-container">
+    <form #requestRef="ngForm" (ngSubmit)="sendRequest(requestRef)">
+        <mat-card fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px" class="mat-elevation-z10 card-container">
+            <div class="mat-title">Send Product Request</div>
+            <div>
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Product Name</mat-label>
+                    <input matInput name="product" ngModel required>
+                </mat-form-field>
+            </div>
+            <div >
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Quantity</mat-label>
+                    <input matInput name="quantity" ngModel required>
+                </mat-form-field>
+            </div>
+            <button mat-raised-button type="submit" color="primary" [disabled]="requestRef.invalid">Submit</button>
+        </mat-card>
     </form>
-    <br>
-  </div>
+</div>
