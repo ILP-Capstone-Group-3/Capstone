@@ -32,7 +32,7 @@ export class UserPanelComponent implements OnInit {
   userId:number=this.route.snapshot.params["id"];
 
   displayedColumns = ['item', 'status'];
-  dataSource: Array<Order> = [];
+  userOrders: Array<Order> = [];
 
   filter(category:string){
     this.filterCategory = this.productList
@@ -46,28 +46,15 @@ export class UserPanelComponent implements OnInit {
   //Function used to get all the user's orders
   orderStatus(): void {
     this.userService.getUserFromId(this.userId).subscribe(data=>{
-      let userEmail = data.email;
-
       //Orders are converted into this format, with quanity + item name, followed by status
       let orders:Array<Order> = [];
       let order;
 
-      //Variables used for this.
-      let orderItemsString: string;
-      let orderStatus: string;
-      let orderItemList;
-
       // Orders contain details about a purchase, along with an
       // array of products.
-      this.orderService.retrieveFromEmail(userEmail).subscribe(data=> {
-        // For loop for looking at each order
-        data.forEach(element=> {
-          // For loop for looking at each product in the order
-          element.orderItems.forEach(item=> {
-
-          });
-        });
-        this.dataSource=orders;
+      this.orderService.retrieveOrdersByUser(this.userId).subscribe(data=> {
+        this.userOrders = data;
+        console.log(data);
       })
     },
     error=>{

@@ -4,7 +4,8 @@ module.exports = mongoose => {
         _id:Number,
         employeeId:Number,
         product:String,
-        quantity:Number
+        quantity:Number,
+        status:String
       },
       { timestamps: false }
     );

@@ -2,10 +2,11 @@ module.exports = mongoose => {
   var schema = mongoose.Schema(
     {
       _id:Number,
+      orderId:Number,
       userId:Number,
       date:Date,
       status:String,
-      email:String,
+      total:Number,
       orderItems:Array
     }
   );

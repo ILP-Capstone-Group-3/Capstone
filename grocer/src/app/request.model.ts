@@ -5,4 +5,5 @@ export interface Request {
     employeeId:number;
     product:string;
     quantity:number;
+    status:string;
 }

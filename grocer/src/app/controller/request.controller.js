@@ -11,7 +11,8 @@ exports.create = (req,res)=> {
         requestId: req.body._id,
         employeeId: req.body.employeeId,
         product: req.body.product,
-        quantity: req.body.quantity
+        quantity: req.body.quantity,
+        status: "Pending"
     });
 
     // This portion saves the user object to the database.

@@ -4,9 +4,6 @@
         <mat-accordion>
             <mat-expansion-panel>
               <mat-expansion-panel-header>
-                <!-- <mat-panel-title>
-                  Self aware panel
-                </mat-panel-title> -->
                 <div fxLayout="row" fxLayoutAlign="space-between center" class="orders-panel">
                     <div fxLayout="column" fxLayoutGap="4px">
                         <div class="mat-caption">Order Date</div>
@@ -14,20 +11,15 @@
                     </div>
 
                     <div fxLayout="column" fxLayoutGap="4px">
-                        <div class="mat-caption">User name</div>
+                        <div class="mat-caption">User ID</div>
                         <div class="mat-body-2">{{order.userId}}</div>
                     </div>
-
-                    <!-- <div fxLayout="column" fxLayoutGap="4px">
-                        <div class="mat-caption">Total item</div>
-                        <div class="mat-body-2">{{order.orderItems.}}</div>
-                    </div> -->
 
                     <div fxLayout="column" fxLayoutGap="4px">
                         <mat-form-field appearance="fill" class="status-dropdown">
                             <mat-label>Order Status</mat-label>
                             <mat-select [value]="order.status">
-                              <mat-option *ngFor="let status of orderStatus" (click)="orderStatusChange(status, order)" [value]="status">
+                              <mat-option *ngFor="let status of orderStatus" (click)="updateOrder(order, status)" [value]="status">
                                 {{status | uppercase}}
                               </mat-option>
                             </mat-select>

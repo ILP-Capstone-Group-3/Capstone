@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { Order } from 'src/app/order.model';
+import { OrderService } from 'src/app/services/order.service';
 import { OrderCancelComponent } from '../order-cancel/order-cancel.component';
-import { UpdateOrderStatusService } from '../services/update-order-status.service';
 
 @Component({
   selector: 'app-update-order-status',
@@ -12,59 +11,39 @@ import { UpdateOrderStatusService } from '../services/update-order-status.servic
 export class UpdateOrderStatusComponent implements OnInit {
 
   orderStatus = ["Shipped", "Out for delivery", "Delivered", "Cancelled"];
-  orders: Order[] = [];
+  orders:Order[] = [];
 
   showProgressBar = true;
 
-  // orders: Order[] = [];
-  constructor(
-    private dialog: MatDialog,
-    private orderService: UpdateOrderStatusService
-  ) { }
+
+  constructor(private orderService:OrderService) { }
 
   ngOnInit(): void {
-    // console.log("orders", this.orders);
-    this.orderService.getOrders().subscribe((ordersResponse: Order[]) => {
-      console.log("orders response", ordersResponse);
+    // Initialize the orders
+    this.orderService.retrieveOrders().subscribe(data=> {
+      this.orders = data;
       this.showProgressBar = false;
-      if(ordersResponse.length > 0) {
-        this.orders = ordersResponse;
-      }
+      console.log(data);
+    },
+    error=> {
+      console.log(error);
     });
   }
 
-  orderStatusChange(status: any, order: Order) {
-    console.log("status", status, order);
-    this.showProgressBar = true;
-    if(status === "Cancelled") {
-      const dialogRef = this.dialog.open(OrderCancelComponent, {
-        panelClass: "",
-        width: "540px",
-        data: {
-          order
-        }
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        this.showProgressBar = false;
-        console.log("Result Obtained ", result);
-        if (result === undefined || result === "") {
-        } else {
-          // service call code should be written here
-        }
-      });
-    } else {
-      order.status = status;
-      const orders = [order];
-      this.orderService.updateOrderStatus(orders).subscribe((ordersResponse: Order[]) => {
-        console.log("orders response", ordersResponse);
-        this.showProgressBar = false;
-        this.orderService.getOrders().subscribe((ordersResponse: Order[]) => {
-          console.log("orders response", ordersResponse);
-          this.orders = ordersResponse;
-        });
-      });
-    }
+  // Function called to update an order
+  updateOrder(order:Order, newStatus:string): void {
+    let newOrder = order;
+    newOrder.status = newStatus;
+
+    // Update the order in the database
+    this.orderService.updateOrder(order.orderId, newOrder).subscribe(response=> {
+      console.log(response);
+      alert("Order updated successfully!");
+    },
+    error=> {
+      console.log(error);
+    });
+
   }
 
 }

@@ -15,16 +15,10 @@ module.exports = app => {
     // router.delete: Deleting data
     // --------------------------------
 
-    router.get("/retrieveOrders", orders.retrieveOrders);
-    router.put("/updateOrder/:id", orders.updateOrder);
-    router.post("/postOrder", orders.postOrder);
-    router.get("/newOrders", orders.retrieveNewestOrders);
-    router.get("/oldOrders", orders.retrieveOldestOrders);
-    router.get("/deliveryOrders", orders.retrieveDeliveryOrders);
-    router.get("/deliveredOrders", orders.retrieveDeliveredOrders);
-    router.get("/shippedOrders", orders.retrieveShippedOrders);
-    router.get("/canceledOrders", orders.retrieveCanceledOrders);
-    router.get("/searchOrders/:email", orders.searchOrders);
+    router.post("/", orders.postOrder);
+    router.get("/", orders.retrieveOrders);
+    router.get("/:id", orders.findByUser);
+    router.put("/:id", orders.updateOrder);
 
     // Since this is the router for users, we use /api/users
     app.use("/api/orders", router);

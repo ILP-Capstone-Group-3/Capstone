@@ -10,12 +10,20 @@ exports.postOrder = (request,response)=> {
     // new employee object.
     //
     // NOTE: request.body is used for grabbing the parameters!
+
+    // Automatically calculate the total
+    const totalCost = 0;
+    request.body.orderItems.forEach(element=> {
+        totalCost += element.price;
+    });
+    // The new order object
     const order = new Order({
         _id: request.body._id,
+        orderId: request.body._id,
         userId: request.body.userId,
-        date: request.body.date,
+        date: new Date(),
         status: request.body.status,
-        email: request.body.email,
+        total: totalCost,
         orderItems: request.body.orderItems,
     });
 
@@ -33,14 +41,15 @@ exports.postOrder = (request,response)=> {
     });
 };
 
-
-exports.retrieveOrders = (req, res, next) => {
-    Order.find({}).then((fetchedOrders)=> {
-        res.status(200).json({
-            message: 'Orders fetched!',
-            orders: fetchedOrders
-          });
+exports.retrieveOrders = (req, res) => {
+    Order.find().then(data=> {
+        res.send(data);
     })
+    .catch(err=> {
+        res.status(500).send({
+            message: err.message || "An error occurred retrieving requests."
+        });
+    });
 };
 
 exports.updateOrder = (req, res, next) => {
@@ -69,73 +78,15 @@ exports.updateOrder = (req, res, next) => {
         });
 };
 
-exports.retrieveNewestOrders = (req, res, next) => {
-    Order.find().sort({date: -1}).then((fetchedOrders)=> {
-        res.status(200).json({
-            message: 'Orders fetched!',
-            orders: fetchedOrders
-          });
-    })
-};
+exports.findByUser = (request,response)=> {
+    const id = request.params.id;
 
-exports.retrieveOldestOrders = (req, res, next) => {
-    Order.find().sort({created_at: -1}).then((fetchedOrders)=> {
-        console.log(fetchedOrders);
-        res.status(200).json({
-            message: 'Orders fetched!',
-            orders: fetchedOrders
-          });
+    Order.find({userId:id}).then(data=> {
+        res.send(data);
     })
-
-};
-
-exports.retrieveDeliveryOrders = (req, res, next) => {
-    Order.find({"status" : "Out for delivery"}).then((fetchedOrders)=> {
-        console.log(fetchedOrders);
-        res.status(200).json({
-            message: 'Orders fetched!',
-            orders: fetchedOrders
-          });
-    })
-};
-
-exports.retrieveDeliveredOrders = (req, res, next) => {
-    Order.find({"status" : "Delivered"}).then((fetchedOrders)=> {
-        console.log(fetchedOrders);
-        res.status(200).json({
-            message: 'Orders fetched!',
-            orders: fetchedOrders
-          });
-    })
-};
-
-exports.retrieveCanceledOrders = (req, res, next) => {
-    Order.find({"status" : "Canceled"}).then((fetchedOrders)=> {
-        console.log(fetchedOrders);
-        res.status(200).json({
-            message: 'Orders fetched!',
-            orders: fetchedOrders
-          });
-    })
-};
-
-exports.retrieveShippedOrders = (req, res, next) => {
-    Order.find({"status" : "Shipped"}).then((fetchedOrders)=> {
-        console.log(fetchedOrders);
-        res.status(200).json({
-            message: 'Orders fetched!',
-            orders: fetchedOrders
-          });
-    })
-};
-
-exports.searchOrders = (req, res, next) => {
-    console.log(req.params.email);
-    Order.find({"email": req.params.email}).then((fetchedOrders)=> {
-        console.log(fetchedOrders);
-        res.status(200).json({
-            message: 'Orders fetched!',
-            orders: fetchedOrders
-          });
-    })
+    .catch(err=> {
+        res.status(500).send({
+            message: err.message || "An error occurred retrieving requests."
+        });
+    });
 };
