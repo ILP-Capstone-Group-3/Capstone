@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { EditProileService } from '../services/edit-profile.service';
+import { NgForm } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { EmployeeService } from 'src/app/services/employee.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -10,43 +10,55 @@ import { EditProileService } from '../services/edit-profile.service';
 })
 export class EditProfileComponent implements OnInit {
 
-  enableSaveButton =  true;
-  showProgressBar = false;
+  showProgressBar = true;
+  employeeId:number = this.route.snapshot.params["id"];
 
-  userFormGroup = new FormGroup({
-    userName: new FormControl({value: 'Max', disabled: true}),
-    userId: new FormControl({value: 'emp-12j3kd', disabled: true}),
-    password: new FormControl({value: '123456aA', disabled: true})
-  });
-
-  constructor(
-    private editProfileService: EditProileService,
-    private snackbar: MatSnackBar
-  ) { }
+  constructor(private employeeService:EmployeeService, private route:ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.showProgressBar = false;
   }
 
-  editPassword() {
-    this.userFormGroup.get('password')?.enable();
-    this.enableSaveButton = false;
-  }
-
-  savePassword() {
-    this.userFormGroup.get('password')?.disable();
-    this.enableSaveButton =  true;
+  // Function for submit button
+  changePassword(profileRef:NgForm): void {
+    let profileForm = profileRef.value;
     this.showProgressBar = true;
-    this.editProfileService.editProfile(this.userFormGroup.value).subscribe((response) => {
-      this.showProgressBar = false;
-      if(response) {
-        console.log("response", response);
-        this.snackbar.open('Password updated successfully', '', {duration: 3000});
+
+    // Grab employee data from database
+    this.employeeService.getEmployeeFromId(this.employeeId).subscribe(data=> {
+      // Test if the current password matches
+      if (profileForm.currentpassword == data.password) {
+        // Test if the two new password match
+        if (profileForm.newpassword == profileForm.renewpassword) {
+          // Change the password
+          let newEmployee = data;
+          newEmployee.password = profileForm.newpassword;
+
+          // Update the password in the database
+          this.employeeService.updateEmployee(this.employeeId, newEmployee).subscribe(res=> {
+            alert("Password updated!");
+            console.log(res);
+          },
+          err=> {
+            console.log(err);
+          })
+        }
+        // New password mismatch
+        else {
+          alert("ERROR: The passwords don't match.");
+        }
       }
-    }, (error) => {
-      this.showProgressBar = false;
-      this.snackbar.open('Error updating Password', '', {duration: 3000});
-      console.log("error", error);
+      // Wrong current password inputted
+      else {
+        alert("ERROR: Incorrect password.");
+      }
+    },
+    error=> {
+      console.log(error);
     });
+
+    this.showProgressBar = false;
+    profileRef.resetForm();
   }
 
 }
