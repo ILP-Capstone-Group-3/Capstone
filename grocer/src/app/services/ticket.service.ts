@@ -24,14 +24,19 @@ export class TicketService {
     return this.http.post(`${baseUrl}/createNewTicket`, data);
   }
 
+  // Updates a ticket
+  updateTicket(id:number, data:any): Observable<any> {
+    return this.http.put(`${baseUrl}/updateSingleTicket/${id}`, data);
+  }
+
   // Gets every ticket
   getAll(): Observable<Ticket[]> {
     return this.http.get<Ticket[]>(`${baseUrl}/allDatabaseTicket`);
   }
 
   // Gets a ticket by id
-  getTicketById(id:number): Observable<Ticket[]> {
-    return this.http.get<Ticket[]>(`${baseUrl}/getSingleTicket/${id}`);
+  getTicketById(id:number): Observable<Ticket> {
+    return this.http.get<Ticket>(`${baseUrl}/getSingleTicket/${id}`);
   }
 
   // Gets a list of tickets based on user ID

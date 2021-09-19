@@ -21,10 +21,8 @@ module.exports = app => {
     router.get("/allDatabaseTicket", tickets.allDatabaseTicket);
     router.delete("/deleteTicket/:id", tickets.deleteTicket);
 
-    // No idea what these do
-    router.put("/updateTicketStatus/:pid", tickets.updateTicketStatus);
-    router.put("/userMessage", tickets.userMessage);
-    router.put("/adminMessage", tickets.adminMessage);
+    // Update a ticket by id
+    router.put("/updateSingleTicket/:id", tickets.updateOne);
 
     // Since this is the router for tickets, we use /api/tickets
     app.use("/api/tickets", router);

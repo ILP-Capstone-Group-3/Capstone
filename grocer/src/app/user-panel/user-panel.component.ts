@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { OrderService } from '../services/order.service';
 import { Order } from '../order.model';
+import { ApiService } from '../api.service'; 
+import { CartService } from '../cart.service';
 
 
 @Component({
@@ -13,7 +15,13 @@ import { Order } from '../order.model';
 })
 export class UserPanelComponent implements OnInit {
 
-  constructor(public router:Router, private userService:UserService, private orderService:OrderService, private route:ActivatedRoute) { }
+  public productList : any ;
+  public filterCategory : any
+  searchKey:string ="";
+
+  public totalItem : number = 0;
+
+  constructor(private cartService:CartService, private api:ApiService, public router:Router, private userService:UserService, private orderService:OrderService, private route:ActivatedRoute) { }
 
   //Strings used for the html page
   orderTable:string="";
@@ -26,6 +34,14 @@ export class UserPanelComponent implements OnInit {
   displayedColumns = ['item', 'status'];
   dataSource: Array<Order> = [];
 
+  filter(category:string){
+    this.filterCategory = this.productList
+    .filter((a:any)=>{
+      if(a.category == category || category==''){
+        return a;
+      }
+    })
+  }
 
   //Function used to get all the user's orders
   orderStatus(): void {
@@ -78,6 +94,32 @@ export class UserPanelComponent implements OnInit {
   ngOnInit(): void {
     this.orderStatus();
     this.getStartingFunds();
+
+    this.api.getProduct()
+    .subscribe(res=>{
+      this.productList = res;
+      this.filterCategory = res;
+      this.productList.forEach((a:any) => {
+        if(a.category ==="women's clothing" || a.category ==="men's clothing"){
+          a.category ="fashion"
+        }
+        Object.assign(a,{quantity:1,total:a.price});
+      });
+      console.log(this.productList)
+    });
+
+    this.cartService.search.subscribe((val:any)=>{
+      this.searchKey = val;
+    })
+
+    this.cartService.getProducts()
+    .subscribe(res=>{
+      this.totalItem = res.length;
+    })
+  }
+
+  addtocart(item: any){
+    this.cartService.addtoCart(item);
   }
 
   //Helper function to check if edit profile stuff is empty or not

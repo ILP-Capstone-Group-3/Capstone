@@ -8,6 +8,8 @@ import { EmployeePanelComponent } from './employee-panel/employee-panel.componen
 import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { EmployeeLoginComponent } from './employee-login/employee-login.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { CartComponent } from './cart/cart.component';
+import { RaiseticketComponent } from './raiseticket/raiseticket.component';
 
 
 
@@ -20,6 +22,8 @@ const routes: Routes = [
   {path:"employeePanel/:id",component:EmployeePanelComponent},
   {path:"adminLogin",component:AdminLoginComponent},
   {path:"adminPanel",component:AdminPanelComponent},
+  {path:"raiseTicket", component:RaiseticketComponent},
+  {path:'userPanel/:id/cart', component: CartComponent},
   {path:"",component:FirstPageComponent}
 ];
 

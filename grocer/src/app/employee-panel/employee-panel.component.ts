@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeService } from '../services/employee.service';
 
 @Component({
@@ -20,7 +20,8 @@ export class EmployeePanelComponent implements OnInit {
   changePasswordMessage:string="";
 
   //Holds the employee's login information
-  employeeId:number=-1;
+  employeeId:number = this.route.snapshot.params["id"];
+  employeeName:string = "";
   employeeDefaultPass:string=""; //used for first login
 
   firstLogin:boolean=true;//replace these later
@@ -28,9 +29,16 @@ export class EmployeePanelComponent implements OnInit {
 
 
 
-  constructor(public router:Router, private EmployeeService:EmployeeService) { }
+  constructor(public router:Router, private employeeService:EmployeeService, private route:ActivatedRoute, private EmployeeService:EmployeeService) { }
 
   ngOnInit(): void {
+    // Get the full name of the employee
+    this.employeeService.getEmployeeFromId(this.employeeId).subscribe(data=> {
+      this.employeeName = data.firstname + " " + data.lastname;
+    },
+    error=> {
+      console.log(error);
+    });
   }
 
   developerCreateEmployee(): void {

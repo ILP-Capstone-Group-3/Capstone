@@ -1,0 +1,22 @@
+<div>
+  <h1>Grocery HUB</h1>
+  <form class="form-dimensions" #ticketRef="ngForm" (ngSubmit)="submitTicket(ticketRef)">
+      <h1>Create Support Ticket</h1>
+      <mat-form-field>
+          <mat-label>Your User ID</mat-label>
+          <input matInput name="username" minlength="6" maxlength="6" ngModel required>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+          <mat-label>Description</mat-label>
+          <textarea matInput name="description" ngModel required></textarea>
+      </mat-form-field>
+      <br>
+      <button type="submit" mat-raised-button color="primary" [disabled]="ticketRef.invalid">Submit</button>
+      <br><br>
+      <button mat-fab color="warn" aria-label="Main Screen" routerLink="/userLogin">
+          <mat-icon>arrow_back</mat-icon>
+      </button>
+  </form>
+  <br>
+</div>

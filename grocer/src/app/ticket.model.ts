@@ -1,11 +1,8 @@
-import { Message } from "./message.model";
 
 export interface Ticket {
     _id:number;
+    ticketId:number;
     userId:number;
-    email:number;
-    title:string;
     description:string;
-    status:string;
-    messages:Array<Message>;
+    isClosed:boolean;
 }

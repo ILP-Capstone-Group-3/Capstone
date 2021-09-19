@@ -48,6 +48,8 @@ import { UserPanelComponent } from './user-panel/user-panel.component';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { EmployeeLoginComponent } from './employee-login/employee-login.component';
+import { CartComponent } from './cart/cart.component';
+import { RaiseticketComponent } from './raiseticket/raiseticket.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,7 +68,9 @@ import { EmployeeLoginComponent } from './employee-login/employee-login.componen
     EmployeePanelComponent,
     AdminLoginComponent,
     AdminPanelComponent,
-    EmployeeLoginComponent
+    EmployeeLoginComponent,
+    CartComponent,
+    RaiseticketComponent
 
   ],
   imports: [

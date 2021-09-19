@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/user.model';
-import { UnlockUsersService } from '../services/unlock-users.service';
+import { TicketService } from 'src/app/services/ticket.service';
+import { UserService } from 'src/app/services/user.service';
+import { Ticket } from 'src/app/ticket.model';
 
 @Component({
   selector: 'app-unlock-users',
@@ -9,71 +10,88 @@ import { UnlockUsersService } from '../services/unlock-users.service';
 })
 export class UnlockUsersComponent implements OnInit {
 
-  lockedUsers: any[] = [
-    {
-      _id: "ubdih189he802jei",
-      userName: "Barney Stinson",
-      email: "max@mail.com",
-      password: "1234",
-      firstName: "Barney",
-      lastName: "stinson",
-      paymentMethods: 10,
-      numAttempts: 5,
-      date: new Date(),
-      phoneNumber: 8391200101,
-      addresses: [{
-        street: "10th street",
-        Apt: "baker street",
-        city: "new york",
-        state: "Texas",
-        zipcode: 210012
-      }]
-    },
-    {
-      _id: "ubdih189he802jei",
-      userName: "Ted mosby",
-      email: "ted@mail.com",
-      password: "1234",
-      firstName: "Ted",
-      lastName: "Mosby",
-      paymentMethods: 10,
-      numAttempts: 5,
-      date: new Date(),
-      phoneNumber: 8391200101,
-      addresses: [{
-        street: "10th street",
-        Apt: "baker street",
-        city: "new york",
-        state: "Texas",
-        zipcode: 210012
-      }]
-    }
-  ];
-
   showProgressBar = true;
+  lockedUsers:Array<Ticket> = [];
 
-  constructor(private unlockUserService: UnlockUsersService) { }
+  constructor(private userService:UserService, private ticketService:TicketService) { }
 
   ngOnInit(): void {
-    this.unlockUserService.getLockedUsers().subscribe((usersResponse: any[]) => {
-      console.log("locked users", usersResponse);
+    this.ticketService.getAll().subscribe(data=> {
+      this.lockedUsers = data;
       this.showProgressBar = false;
-      this.lockedUsers = usersResponse?.filter((user) => user.numAttempts > 0);
-    })
+    },
+    error=> {
+      console.log(error);
+      this.showProgressBar = false;
+      alert("An error occurred getting tickets");
+    });
   }
 
-  unlockUser(user: any) {
-    console.log("user", user);
-    this.showProgressBar = true;
-    this.unlockUserService.unlockUser(user.userName).subscribe((response) => {
-      this.showProgressBar = false;
-      if(response) {
-        this.unlockUserService.getLockedUsers().subscribe((usersResponse: any[]) => {
-          console.log("locked users", usersResponse);
-          this.lockedUsers = usersResponse?.filter((user) => user.numAttempts > 0);
+  // Closes the ticket corresponding to ticketid
+  closeTicket(ticketid:number): void {
+    this.ticketService.getTicketById(+ticketid).subscribe(data=> {
+      let newTicket = data;
+      newTicket.isClosed = true;
+
+      // Change the ticket in the database
+      this.ticketService.updateTicket(+ticketid, newTicket).subscribe(response=> {
+        alert("Ticket " + ticketid + " closed!");
+
+        this.showProgressBar = true;
+        // Update the table
+        this.ticketService.getAll().subscribe(data=> {
+          this.lockedUsers = data;
+          this.showProgressBar = false;
+        },
+        error=> {
+          console.log(error);
+          this.showProgressBar = false;
+          alert("An error occurred getting tickets");
         });
-      }
+      },
+      error=> {
+        console.log(error);
+      });
+
+    },
+    error=> {
+      console.log(error);
     });
+    
+  }
+
+  // Unlock button function
+  unlockUser(ticket:Ticket): void {
+    this.showProgressBar = true;
+
+    this.userService.getUserFromId(+ticket.userId).subscribe(data=> {
+      let curUser = data;
+
+      // First, unlock the user
+      curUser.isLocked = false;
+      curUser.attemptedLogins = 0;
+
+      // Unlock the user in the database
+      this.userService.updateUser(+ticket.userId, curUser).subscribe(response=> {
+        console.log("Unlocked user.");
+        console.log(response);
+
+        // Now update the ticket to closed
+        this.closeTicket(+ticket.ticketId);
+
+      },
+      err=> {
+        console.log(err);
+      })
+    },
+    error=> {
+      console.log(error);
+    });
+  }
+
+  // Decline ticket button function
+  declineTicket(ticket:Ticket): void {
+    this.closeTicket(+ticket.ticketId);
   }
 
 }

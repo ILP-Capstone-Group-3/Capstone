@@ -39,6 +39,18 @@ export class UserLoginComponent implements OnInit {
           // Login successful
           if (loginForm.password == curUser.password && !curUser.isLocked) {
             this.loginErrorMessage = "";
+            curUser.attemptedLogins = 0;
+
+            // Reset their login attempts
+            this.userService.updateUser(+loginForm.username, curUser).subscribe(response=> {
+              // Display what happened in console
+              console.log("Login attempts updated to " + curUser.attemptedLogins);
+              console.log(response);
+            },
+            error=> {
+              console.log(error);
+            });
+
             // Navigate to the user panel page
             let url = "/userPanel/"+loginForm.username;
             this.router.navigateByUrl(url);

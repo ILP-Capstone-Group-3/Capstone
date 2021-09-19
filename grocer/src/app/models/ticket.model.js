@@ -2,12 +2,10 @@ module.exports = mongoose => {
     var schema = mongoose.Schema(
       {
         _id:Number,
+        ticketId:Number,
         userId:Number,
-        email:Number,
-        title:String,
         description:String,
-        status:String,
-        messages:Array
+        isClosed:Boolean
       },
       { timestamps: false }
     );

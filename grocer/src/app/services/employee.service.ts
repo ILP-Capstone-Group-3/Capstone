@@ -20,8 +20,8 @@ export class EmployeeService {
   }
 
   // Gets an Employee by their _id
-  getEmployeeFromId(id:number): Observable<any> {
-    return this.http.get(`${baseUrl}/${id}`);
+  getEmployeeFromId(id:number): Observable<Employee> {
+    return this.http.get<Employee>(`${baseUrl}/${id}`);
   }
 
   // Deletes an employee from the database by their _id

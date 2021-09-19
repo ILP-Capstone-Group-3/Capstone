@@ -6,25 +6,50 @@ exports.createNewTicket = (req, res)=> {
 
     const newTicket = new Ticket({
         _id: req.body._id,
+        ticketId: req.body._id,
         userId: req.body.userId,
-        email: req.body.email,
-        title: req.body.title,
         description: req.body.description,
-        messages:[]
+        isClosed: false
         //filename: req.body.filename
     });
 
     newTicket.save(newTicket)
     .then(data => {
-        response.send(data); // This just sends the data in the web console
+        res.send(data); // This just sends the data in the web console
     })
     .catch(err => {
-        response.status(500).send({
+        res.status(500).send({
             message:
                 err.message || "Some error occurred making the ticket"
         });
     });
-}
+};
+
+exports.updateOne = (request,response)=> {
+    // Grab the "id" parameter from the URL, which looks like
+    // http://localhost:9090/api/users/id
+    //
+    // NOTE: notice how it doesn't grab the id from the angular server,
+    //       but instead grabs it from the node server! Node server port 
+    //       is 9090, angular is 4200.
+    const id = request.params.id;
+
+    // findByIdAndUpdate is part of the database library
+    // request.body is the entirety of the content to modify in the database
+    Ticket.findByIdAndUpdate(id, request.body, { useFindAndModify: false })
+        .then(data=> {
+            if (!data) {
+                request.status(404).send({
+                    message:`Cannot update ticket with id=${id}. It probably doesn't exist.`
+                });
+            } else response.send({message:"Ticket updated successfully."});
+        })
+        .catch(err=> {
+            response.status(500).send({
+                message: "Error updating ticket with id="+id
+            });
+        });
+};
 
 // Find a Single Ticket using the ID
 exports.getSingleTicket = (req, res) =>{
