@@ -16,13 +16,8 @@ export class UserPanelComponent implements OnInit {
   public filterCategory : any
   searchKey:string ="";
 
-// **********
-  public products : any = [];
-  public grandTotal !: number;
-
   public totalItem : number = 0;
-  public searchTerm !: string;
-// ****
+
 
   constructor(public router:Router, private userService:UserService, private route:ActivatedRoute, private api : ApiService, private cartService : CartService) { }
 
@@ -98,28 +93,17 @@ export class UserPanelComponent implements OnInit {
       this.searchKey = val;
     })
 
-// ***********
- this.cartService.getProducts()
+    this.cartService.getProducts()
     .subscribe(res=>{
-      this.products = res;
-       this.grandTotal = this.cartService.getTotalPrice();
-   })
-  
-//   removeItem(item: any){
-//     this.cartService.removeCartItem(item);
-//   }
-//   emptycart(){
-//     this.cartService.removeAllCart();
-//   }
+      this.totalItem = res.length;
+    })
 
-// ***********
-
-
-  }
+}
 
   addtocart(item: any){
     this.cartService.addtoCart(item);
   }
+
   filter(category:string){
     this.filterCategory = this.productList
     .filter((a:any)=>{
@@ -215,30 +199,5 @@ export class UserPanelComponent implements OnInit {
       this.fundsErrorMessage="Funds failed to be updated."
     })
   }
-
-
-
-
-
-
-
-// ***************************
-
- 
-search(event:any){
-  this.searchTerm = (event.target as HTMLInputElement).value;
-  console.log(this.searchTerm);
-  this.cartService.search.next(this.searchTerm);
-} 
- 
-removeItem(item: any){
-  this.cartService.removeCartItem(item);
-}
-
-emptycart(){
-  this.cartService.removeAllCart();
-}
-
-//*************** */
 
 }

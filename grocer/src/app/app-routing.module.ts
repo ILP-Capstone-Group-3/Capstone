@@ -18,7 +18,7 @@ const routes: Routes = [
   {path:"adminSandbox",component:AdminSandboxComponent},
   {path:"",component:FirstPageComponent},
   {path:"raiseTicket", component:RaiseticketComponent},
-  {path:'cart', component: CartComponent}
+  {path:'userPanel/:id/cart', component: CartComponent}
 ];
 
 @NgModule({
