@@ -20,7 +20,7 @@ export class UserPanelComponent implements OnInit {
 
 
   constructor(public router:Router, private userService:UserService, private route:ActivatedRoute, private api : ApiService, private cartService : CartService) { }
-
+  msg?: string;
   //Strings used for the html page
   orderTable:string="";
   editResponse:string="";
@@ -101,7 +101,8 @@ export class UserPanelComponent implements OnInit {
 }
 
   addtocart(item: any){
-    this.cartService.addtoCart(item);
+    this.cartService.addtoCart(item).
+    subscribe(result=>this.msg=result, error=>console.log(error));
   }
 
   filter(category:string){

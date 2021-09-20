@@ -1,8 +1,11 @@
 module.exports = app => {
     // Import the user controller
-    const users = require("../controller/user.controller");
+    let express = require("express")
+    let router = express.Router()
+    let users = require("../controller/user.controller");
+    let products = require("../controller/product.controller");
 
-    var router = require("express").Router();
+   // var router = require("express").Router();
 
     // IMPORTANT: the router.post, router.get, etc. matter! You can 
     // also have multiple router actions (ex. having 2 router.post).
@@ -25,6 +28,11 @@ module.exports = app => {
 
     // Update a user by id
     router.put("/:id", users.updateOne);
+
+
+    router.post("/CartItems", users.CartItems)
+
+    module.exports = router;
 
     // Since this is the router for users, we use /api/users
     app.use("/api/users", router);
