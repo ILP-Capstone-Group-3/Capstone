@@ -101,8 +101,7 @@ export class UserPanelComponent implements OnInit {
 }
 
   addtocart(item: any){
-    this.cartService.addtoCart(item).
-    subscribe(result=>this.msg=result, error=>console.log(error));
+    this.cartService.addtoCart(item)
   }
 
   filter(category:string){

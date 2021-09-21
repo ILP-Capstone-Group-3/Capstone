@@ -15,7 +15,8 @@ export class CartComponent implements OnInit {
 
   constructor(public cartService : CartService,
     public router:Router) { }
-
+  
+  msg?: string;
   ngOnInit(): void {
     this.cartService.getProducts()
     .subscribe(res=>{
@@ -32,11 +33,8 @@ export class CartComponent implements OnInit {
     this.cartService.removeAllCart();
   }
 
-  addToCart(item: any) {
-    this.cart.push(item)
-    this.cartService.addtoCart(item);
-    console.log(item)
-    console.log(item.description)
+  payout() {
+    this.cartService.PayOut()
     window.alert('Order placed successfully!');
   }
 }

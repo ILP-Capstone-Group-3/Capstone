@@ -24,17 +24,21 @@ export class CartService {
     this.productList.next(product);
   }
 
-  addtoCart(cart : Cart):Observable<any>{
-    this.cartItemList.push(cart);
+  addtoCart(product : any){
+    this.cartItemList.push(product);
     this.productList.next(this.cartItemList);
     this.getTotalPrice();
     console.log(this.cartItemList)
+}
 
-    return this.http.post("http://localhost:9090/api/users/CartItems", this.cartItemList,
-    {responseType:'text'})
-  }
 
-  getTotalPrice() : number{
+
+PayOut(){
+  return this.http.post("http://localhost:9090/api/users/CartItems",this.cartItemList,
+  {responseType:'text'})
+}
+
+getTotalPrice() : number{
     let grandTotal = 0;
     this.cartItemList.map((a:any)=>{
       grandTotal += a.total;

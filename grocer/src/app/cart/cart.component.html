@@ -32,7 +32,7 @@
                             <td colspan="4"></td>
                             <td><button (click)="emptycart()" class="btn btn-danger">Empty Cart</button></td>
                             <td><button routerLink="/userPanel/:id" class="btn btn-primary">Shop More</button></td>
-                            <td><button routerLink="/userPanel/:id" class="btn btn-success" (click)="addToCart(cart)">Checkout</button></td>
+                            <td><button routerLink="/userPanel/:id" class="btn btn-success" (click)="payout()">Checkout</button></td>
                             <td><strong>Grand Total : ${{grandTotal}}</strong></td>
                         </tr>
                     </tbody>

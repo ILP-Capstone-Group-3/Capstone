@@ -1,6 +1,6 @@
 const { response } = require("express");
 const db = require("../models");
-let productModel = require("../models/cart.model");
+let cartModel = require("../models/cart.model");
 // This is how we access the user database
 const User = db.users;
 
@@ -42,8 +42,10 @@ exports.register = (request, response)=> {
 
 exports.CartItems = async(request, response)=>{
     let cart = request.body;  //receive the data from post method
-    let result = await cartModel.insertMany(cart)
-    response.send("Cart entered successfully")
+    cart.forEach(element => {
+        let result = cartModel.insertMany(element)  
+    });
+   response.send("Cart entered successfully")
 }
 
 
